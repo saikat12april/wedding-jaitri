@@ -1,0 +1,3047 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Safari */
+    -khtml-user-select: none;
+    /* Konqueror HTML */
+    -moz-user-select: none;
+    /* Old Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+    overflow-x: hidden;
+    /* This padding-top needs to account for the header's height + the blue line's height. */
+    /* Header (90px logo + 10px top/bottom padding = ~110px) + Blue Line (10px) = 120px */
+    padding-top: 120px;
+    overflow-y: scroll;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+
+body.no-scroll {
+    overflow: hidden;
+    /* Hides both vertical and horizontal scrollbars during animation */
+}
+
+/* Header */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 10px 30px;
+    /* This gives your header 10px top/bottom padding */
+    background-color: rgb(153, 0, 51);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    /* --- FIXED HEADER PROPERTIES --- */
+    position: fixed;
+    /* Header is fixed at the top */
+    top: 0;
+    width: 100%;
+    z-index: 1001;
+    /* Header should be on top of general content */
+}
+
+.logo img {
+    height: 90px;
+    /* Your logo height is 90px */
+    width: 90px;
+}
+
+nav {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.social-icons {
+    display: flex;
+    gap: 16px;
+    margin-left: 20px;
+}
+
+.social-icons a {
+    color: #fff;
+    font-size: 20px;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.social-icons a:hover {
+    color: #e91e63;
+}
+
+/* Toggle Button - desktop default hidden */
+.menu-toggle {
+    display: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #fff;
+    order: 3;
+}
+
+/* Nav links - desktop default visible, mobile default hidden */
+.nav-links {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    flex: 1;
+    justify-content: center;
+    order: 2;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-links li {
+    position: relative;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    transition: color 0.3s ease, background 0.3s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.nav-links a:hover {
+    color: #e91e63;
+    background-color: #f3f3f3;
+    border-radius: 6px;
+}
+
+/* Blinking Dot */
+.blinking-dot {
+    position: absolute;
+    right: -.2px;
+    width: 8px;
+    height: 8px;
+    background-color: rgb(106, 255, 0);
+    border-radius: 50%;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+/* Nav Highlight (for hover effect) */
+.nav-links li a .nav-highlight {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background-color: rgb(246, 246, 34);
+    transition: width 0.3s ease-in-out;
+    z-index: 0;
+}
+
+.nav-links li a:hover .nav-highlight,
+.nav-links li a:focus .nav-highlight {
+    width: 100%;
+}
+
+/* --- Blue Static Line Below Header (always visible) --- */
+.blue-line-below-header {
+    width: 100%;
+    height: 10px;
+    /* Your desired height for the blue line */
+    background-color: #FFD700;
+    position: fixed;
+    /* Make it fixed */
+    /* Calculate its 'top' based on header's height */
+    /* Header height: Logo (90px) + top padding (10px) + bottom padding (10px) = 110px */
+    top: 110px;
+    /* This positions it exactly below the header */
+    left: 0;
+    z-index: 1000;
+    /* Ensure it's just below the header */
+    overflow: hidden;
+    /* Important: Clip the loading bar inside it */
+}
+
+/* --- Green Train Loading Bar (animates on click) --- */
+#header-loading-bar {
+    position: absolute;
+    /* Now absolute, relative to its parent .blue-line-below-header */
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* Position it at the top of its parent (.blue-line-below-header) */
+    height: 4px;
+    /* Its height will be within the 10px blue line */
+    background-color: transparent;
+    /* The actual background is handled by the :after pseudo-element */
+    overflow: hidden;
+    z-index: 1002;
+    /* Can be higher than blue line, but lower than header if needed */
+    opacity: 0;
+    /* Starts hidden */
+    transition: opacity 0.3s ease-out;
+    pointer-events: none;
+}
+
+#header-loading-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    /* Take full height of #header-loading-bar (which is 4px) */
+    background: linear-gradient(90deg, #0dff00 0%, rgba(221, 255, 1, 0.8) 100%);
+    box-shadow: 0 0 8px 1px rgba(221, 255, 1, 0.8);
+    transform: translateX(0);
+    width: 0;
+    animation: none;
+}
+
+#header-loading-bar.active {
+    opacity: 1;
+    /* Make visible when active */
+}
+
+#header-loading-bar.active::after {
+    animation: fillBar 3s ease-out forwards;
+}
+
+@keyframes fillBar {
+    0% {
+        width: 0%;
+    }
+
+    100% {
+        /* Changed to 100% to fill the whole width of the blue line */
+        width: 100%;
+    }
+}
+
+#header-loading-bar.done {
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
+}
+
+
+/* --- Responsive Design (Adjust as needed for your project) --- */
+@media (max-width: 992px) {
+    header {
+        padding: 10px 20px;
+        /* Assuming padding remains the same */
+    }
+
+    /* Since the header's height (90px logo + 20px padding) remains 110px,
+       the top position for the blue line and body padding-top should be consistent. */
+    .blue-line-below-header {
+        top: 110px;
+        /* Matches desktop, as header height doesn't change in this media query */
+    }
+
+    body {
+        padding-top: 120px;
+        /* Matches desktop, as header + blue line height is consistent */
+    }
+
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+        background-color: rgb(153, 0, 51);
+        position: absolute;
+        top: 100%;
+        /* Below the header */
+        left: 0;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        z-index: 999;
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        pointer-events: none;
+    }
+
+    .nav-links.active {
+        display: flex;
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+    }
+
+    .nav-links li {
+        margin: 10px 0;
+    }
+
+    .social-icons {
+        display: none;
+        width: 100%;
+        justify-content: center;
+        margin-top: 10px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .social-icons.active {
+        display: flex;
+        opacity: 1;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+}
+
+/* Carousel Section */
+.carousel {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.carousel-container {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    /* Set the height based on your image's aspect ratio.
+       For 1920x500 images: (500 / 1920) * 100% = ~26.04% of the width.
+       However, to directly accommodate the 500px height, set it here.
+       This will be the MAX height on larger screens. */
+    height: 390px;
+    /* Directly use your image's height for larger screens */
+}
+
+.slide {
+    opacity: 0;
+    visibility: hidden;
+    width: 100%;
+    /* The image will fill the container's height */
+    object-fit: cover;
+    /* Ensures the image covers the area without distortion, cropping if necessary */
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: opacity 1.5s ease-in-out, visibility 1.5s ease-in-out;
+}
+
+.slide.active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 1;
+}
+
+/* Arrow Buttons */
+.arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.7);
+    border: none;
+    padding: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 2;
+    border-radius: 50%;
+    transition: background 0.3s;
+}
+
+.arrow:hover {
+    background: rgba(255, 255, 255, 1);
+}
+
+.arrow.left {
+    left: 20px;
+}
+
+.arrow.right {
+    right: 20px;
+}
+
+/* Dots */
+.dots {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 2;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.dot.active,
+.dot:hover {
+    background: #ffffff;
+}
+
+/* Media Query for Smaller Screens (Mobile) */
+@media (max-width: 768px) {
+    .carousel-container {
+        /* On mobile, set a height that maintains the aspect ratio or a fixed height.
+           If width is 100vw, and aspect ratio is 1920/500 (3.84:1),
+           then height should be 100vw / 3.84.
+           Let's aim for a manageable height, like 200px or based on a percentage of width.
+           A good approach is to calculate the height based on the width:
+           (500 / 1920) * 100% = ~26.04% of the container's width.
+           Since the container is 100% width, this will be 26.04vw.
+        */
+        height: 20.04vw;
+        /* This maintains the 1920x500 aspect ratio on mobile screens */
+        min-height: 120px;
+        /* Ensure a minimum readable height */
+        max-height: 300px;
+        /* Prevent it from getting too tall on tablets within this breakpoint */
+    }
+
+    .arrow {
+        font-size: 20px;
+        padding: 8px;
+    }
+
+    .arrow.left {
+        left: 10px;
+    }
+
+    .arrow.right {
+        right: 10px;
+    }
+
+    .dots {
+        bottom: 10px;
+        gap: 8px;
+    }
+
+    .dot {
+        width: 10px;
+        height: 10px;
+    }
+}
+
+/* Caption under Carousel */
+.carousel-caption {
+
+    text-align: center;
+
+    padding: 50px 20px;
+
+    color: #333;
+
+    background-color: white;
+    /* Your requested white background */
+
+    position: relative;
+
+    overflow: hidden;
+
+    min-height: 200px;
+
+    /* Add border-radius or box-shadow if you want to style the carousel-caption itself */
+
+}
+
+
+
+.carousel-caption h2 {
+
+    font-size: 32px;
+
+    font-weight: bold;
+
+    color: rgb(153, 0, 51);
+
+    position: relative;
+
+    z-index: 2;
+
+    margin-bottom: 10px;
+
+}
+
+
+
+.carousel-caption p {
+
+    font-size: 20px;
+
+    color: black;
+
+    margin-top: 8px;
+
+    position: relative;
+
+    z-index: 2;
+
+}
+
+
+
+.sindoor-effect-container {
+
+    position: absolute;
+
+    top: 0;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    pointer-events: none;
+
+    z-index: 1;
+
+}
+
+
+
+.sindoor-particle {
+
+    position: absolute;
+
+    background-color: rgba(153, 0, 51, 0.8);
+
+    border-radius: 50%;
+    /* Back to round! */
+
+    opacity: 0;
+
+    animation: sindoorDropAnimation linear infinite;
+
+}
+
+
+
+/* The animation itself - MODIFIED FOR NO TOP SPACE */
+
+@keyframes sindoorDropAnimation {
+
+    0% {
+
+        transform: translateY(0%) scale(0.5);
+        /* Starts directly at the top edge */
+
+        opacity: 0;
+
+    }
+
+    10% {
+
+        transform: translateY(5%) scale(1);
+        /* Appears fully and slightly moved down */
+
+        opacity: 0.8;
+
+    }
+
+    80% {
+
+        transform: translateY(100%) scale(1);
+
+        opacity: 0.2;
+
+    }
+
+    100% {
+
+        transform: translateY(150%) scale(0.5);
+
+        opacity: 0;
+
+    }
+
+}
+
+/* --- Wedding Photos Section --- */
+.wedding-photos-section {
+    padding: 40px 20px;
+    background-color: #f8f8f8;
+    text-align: center;
+}
+
+.photo-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.photo-item {
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    /* Remove text-decoration from here, it's not needed on .photo-item itself */
+}
+
+/* --- IMPORTANT: Apply text-decoration to the <a> tag inside .photo-item --- */
+.photo-item a {
+    text-decoration: none;
+    /* This removes the underline */
+    color: inherit;
+    /* Ensures the link text inherits color from its parent or specific rules */
+    display: flex;
+    /* Make the link a flex container to align its children (img, caption) */
+    flex-direction: column;
+    /* Stack image and caption vertically */
+    height: 100%;
+    /* Make the link fill the height of the photo-item */
+}
+
+.photo-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 6px rgb(153, 0, 51);
+    background-color: rgb(153, 0, 51);
+}
+
+/* When the photo-item is hovered, change the text color within the caption */
+.photo-item:hover .photo-caption h3 {
+    color: #fff;
+    /* White text on hover */
+}
+
+.photo-item:hover .photo-caption p {
+    color: #f3f3f3;
+    /* Slightly off-white text on hover */
+}
+
+.photo-item img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    display: block;
+}
+
+.photo-caption {
+    padding: 15px;
+    text-align: center;
+    flex-grow: 1;
+    /* color: #555; - This is now less relevant as h3 and p have specific colors */
+}
+
+.photo-caption h3 {
+    font-size: 20px;
+    color: #ff0000;
+    /* Original red color for the names */
+    margin-bottom: 5px;
+}
+
+.photo-caption p {
+    font-size: 16px;
+    color: black;
+    /* Original black color for the city */
+}
+
+.view-more-container {
+    margin-top: 50px;
+    text-align: center;
+}
+
+.view-more-btn {
+    display: inline-block;
+    padding: 12px 25px;
+    background-color: rgb(153, 0, 51);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 18px;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.view-more-btn:hover {
+    background-color: #d81b60;
+    transform: translateY(-2px);
+}
+
+/* --- Fullscreen Wedding Film Section --- */
+.fullscreen-video-section {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    background: #000;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.video-background {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    z-index: 1;
+}
+
+.video-border {
+    border: 8px solid #e0e0e0;
+    border-radius: 16px;
+    padding: 8px;
+    background: #fff;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    display: inline-block;
+}
+
+.video-border video {
+    display: block;
+    width: 560px;
+    height: 315px;
+    object-fit: cover;
+    background: #000;
+}
+
+.video-overlay-content {
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    color: #fff;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    max-width: 800px;
+    width: 90%;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.video-overlay-content h1 {
+    font-size: 60px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    line-height: 1.1;
+}
+
+.video-overlay-content p {
+    font-size: 28px;
+    margin-bottom: 40px;
+}
+
+.watch-now-fullscreen-btn {
+    background: #e50914;
+    color: #fff;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-size: 1.1em;
+    cursor: pointer;
+    margin-top: 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 2;
+}
+
+.watch-now-fullscreen-btn i {
+    font-size: 32px;
+}
+
+/* --- Fullscreen Wedding Film Section --- */
+.fullscreen-video-section {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    background: #000;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.video-background {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    z-index: 1;
+}
+
+.video-border {
+    border: 8px solid #990033;
+    border-radius: 16px;
+    padding: 8px;
+    display: block;
+    /* changed from inline-block to block to allow full width */
+    background: #fff;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    /* make the container full width */
+    box-sizing: border-box;
+    /* include border and padding in width */
+}
+
+.video-border video {
+    width: 100%;
+    /* make video take full width of container */
+    height: auto;
+    /* maintain aspect ratio */
+    display: block;
+    background: #000;
+}
+
+.video-overlay-content {
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    color: #fff;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    max-width: 800px;
+    width: 90%;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.video-overlay-content h1 {
+    font-size: 60px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    line-height: 1.1;
+}
+
+.video-overlay-content p {
+    font-size: 28px;
+    margin-bottom: 40px;
+}
+
+.watch-now-fullscreen-btn {
+    background: #e50914;
+    color: #fff;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-size: 1.1em;
+    cursor: pointer;
+    margin-top: 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 2;
+}
+
+.watch-now-fullscreen-btn i {
+    font-size: 32px;
+}
+
+/* --- Floating Text Section --- */
+.floating-text-section {
+    position: relative;
+    width: 100%;
+    min-height: 400px;
+    background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.floating-content {
+    position: relative;
+    z-index: 2;
+    padding: 30px;
+    border-radius: 10px;
+    max-width: 800px;
+    width: 95%;
+    background: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 4px 32px rgba(0, 0, 0, 0.08);
+}
+
+.floating-content h2 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+.floating-content .grand-text {
+    font-size: 3.5em;
+    font-weight: bold;
+    margin-bottom: 20px;
+    line-height: 1.2;
+    background: linear-gradient(to right, #FF0000, #0000FF, #008000, #FFD700);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    animation: gradientMove 4s linear infinite;
+}
+
+@keyframes gradientMove {
+    0% {
+        background-position: 0% center;
+    }
+
+    100% {
+        background-position: 200% center;
+    }
+}
+
+.floating-content .offer-text {
+    font-size: 1.8em;
+    margin-bottom: 15px;
+    font-style: italic;
+}
+
+.floating-content p {
+    color: black;
+    margin-bottom: 10px;
+}
+
+.book-us-btn {
+    display: inline-block;
+    padding: 15px 30px;
+    background-color: rgb(153, 0, 51);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 50px;
+    font-size: 1.2em;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 20px;
+}
+
+.book-us-btn:hover {
+    background-color: #d81b60;
+    transform: translateY(-2px);
+}
+
+/* --- Wedding Films Section --- */
+.wedding-films-section {
+    position: relative;
+    width: 100%;
+    min-height: 500px;
+    background-color: rgb(153, 0, 51);
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 20px;
+    box-sizing: border-box;
+    color: white;
+}
+
+.wedding-films-content {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    max-width: 1200px;
+    width: 100%;
+    gap: 40px;
+    position: relative;
+    z-index: 2;
+}
+
+.wedding-films-text {
+    flex: 1;
+    padding-right: 20px;
+    padding: 0;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.wedding-films-text h2 {
+    font-size: 3em;
+    color: #FFD700;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-align: left;
+}
+
+.wedding-films-text p {
+    font-size: 1.1em;
+    line-height: 1.6;
+    text-align: justify;
+    color: white;
+}
+
+.wedding-films-text p strong {
+    color: #e91e63;
+}
+
+.wedding-films-video-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    min-width: 300px;
+}
+
+.colorful-box {
+    position: relative;
+    padding: 10px;
+    width: 100%;
+    max-width: 560px;
+    margin: 0 auto;
+    background: linear-gradient(45deg, #e91e63, #ffeb3b, #00bcd4);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.colorful-box video {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    background: #000;
+    display: block;
+}
+
+.watch-now-fullscreen-btn.section2 {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 0;
+}
+
+.view-all-films-btn {
+    display: inline-block;
+    background: #e91e63;
+    color: #fff;
+    padding: 12px 32px;
+    border-radius: 30px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.3s;
+    box-shadow: 0 4px 16px rgba(233, 30, 99, 0.15);
+}
+
+.view-all-films-btn:hover {
+    background: #ff4193;
+    color: #fff;
+}
+
+.view-all-films-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Responsive Styles */
+@media (max-width: 900px) {
+
+    .video-border video,
+    .colorful-box video {
+        width: 100vw;
+        height: auto;
+        min-width: 250px;
+        min-height: 160px;
+        max-width: 100%;
+    }
+
+    .video-border,
+    .colorful-box {
+        padding: 3vw;
+        max-width: 100vw;
+    }
+
+    .wedding-films-content {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .wedding-films-video-container {
+        width: 100%;
+        max-width: 500px;
+        min-width: unset;
+    }
+}
+
+@media (max-width: 600px) {
+    .fullscreen-video-section {
+        min-height: 60vh;
+    }
+
+    .video-overlay-content h1 {
+        font-size: 32px;
+    }
+
+    .video-overlay-content p {
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+
+    .floating-content h2 {
+        font-size: 1.3em;
+    }
+
+    .floating-content .grand-text {
+        font-size: 1.5em;
+    }
+
+    .floating-content .offer-text {
+        font-size: 1em;
+    }
+
+    .book-us-btn {
+        padding: 10px 18px;
+        font-size: 1em;
+    }
+
+    .wedding-films-text h2 {
+        font-size: 1.5em;
+    }
+
+    .colorful-box video {
+        width: 100vw;
+        height: auto;
+    }
+}
+
+
+
+.premium-album-section {
+    width: 100%;
+    background: linear-gradient(135deg, #fffbe7 0%, #ffe3e3 100%);
+    padding: 70px 0 0 0;
+}
+
+.premium-offer-content {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.premium-offer-heading {
+    color: #a60039;
+    font-size: 2.2em;
+    font-weight: 700;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+}
+
+.premium-offer-features {
+    font-size: 2.4em;
+    color: #222;
+    font-weight: 900;
+    margin-bottom: 30px;
+    background: linear-gradient(90deg, #e50914, #ffd700, #00bcd4);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    animation: gradientMove 6s linear infinite;
+}
+
+@keyframes gradientMove {
+    0% {
+        background-position: 0% center;
+    }
+
+    100% {
+        background-position: 200% center;
+    }
+}
+
+.see-all-btn {
+    display: inline-block;
+    padding: 16px 38px;
+    font-size: 1.25em;
+    font-weight: 700;
+    background: #e50914;
+    color: #fff;
+    border-radius: 30px;
+    text-decoration: none;
+    box-shadow: 0 4px 18px rgba(229, 9, 20, 0.10);
+    transition: background 0.3s, color 0.3s, transform 0.2s;
+    margin-bottom: 10px;
+}
+
+.see-all-btn:hover {
+    background: #ffd700;
+    color: #a60039;
+    transform: translateY(-2px);
+}
+
+/* Album infinite scroll */
+.album-scroll-section {
+    padding: 0 0 70px 0;
+    background: transparent;
+    overflow: hidden;
+}
+
+.album-scroll-wrapper {
+    width: 100vw;
+    max-width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.album-scroll-track {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    /* More space between images */
+    width: max-content;
+    animation: albumScrollRight 40s linear infinite;
+}
+
+.album-scroll-track img {
+    height: 210px;
+    width: 320px;
+    object-fit: cover;
+    border-radius: 18px;
+    box-shadow: 0 4px 18px rgba(104, 36, 36, 0.12);
+    background: #eee;
+    margin: 0;
+    transition: transform 0.3s;
+}
+
+.album-scroll-track img:hover {
+    transform: scale(1.2);
+    box-shadow: 0 8px 24px rgba(233, 30, 99, 0.18);
+}
+
+/* Scroll left to right */
+@keyframes albumScrollRight {
+    0% {
+        transform: translateX(-50%);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+
+    .premium-offer-heading,
+    .premium-offer-features {
+        font-size: 1.7rem;
+    }
+
+    .album-scroll-track img {
+        height: 120px;
+        width: 180px;
+    }
+
+    .see-all-btn {
+        font-size: 1.1rem;
+        padding: 12px 30px;
+    }
+
+    .premium-album-section {
+        padding: 40px 0 0 0;
+    }
+
+    .album-scroll-section {
+        padding: 0 0 40px 0;
+    }
+}
+
+@media (max-width: 600px) {
+    .premium-offer-heading {
+        font-size: 1.2em;
+    }
+
+    .premium-offer-features {
+        font-size: 1.3em;
+    }
+
+    .album-scroll-track img {
+        height: 70px;
+        width: 110px;
+    }
+}
+
+
+.about-intro-section {
+    padding: 40px 0 20px 0;
+    background: #fff;
+    text-align: center;
+}
+
+.about-intro-text {
+    color: rgb(153, 0, 51);
+    font-size: 1.4rem;
+    font-weight: 600;
+    max-width: 1200px;
+    margin: 0 auto;
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+.about-wedding-jaitri-section {
+    background: #fff;
+    padding: 0 0 60px 0;
+}
+
+.about-wedding-jaitri-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 40px;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+.about-wedding-jaitri-photo {
+    position: relative;
+    width: 100%;
+    max-width: 340px;
+    margin: 0 auto;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #fff;
+}
+
+.about-wedding-jaitri-photo img {
+    width: 100%;
+    height: 460px;
+    display: block;
+    border-radius: 20px;
+}
+
+.about-photo-overlay {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    /* Semi-transparent dark background with blur */
+    color: #fff;
+    padding: 10px 24px 8px 24px;
+    border-radius: 12px;
+    text-align: center;
+    min-width: 200px;
+    max-width: 100%;
+    z-index: 2;
+}
+
+.about-photo-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.about-photo-title {
+    font-size: 1rem;
+    margin-top: 2px;
+    white-space: nowrap;
+    letter-spacing: 1px;
+    opacity: 1;
+}
+
+
+
+/* Middle column */
+.about-wedding-jaitri-middle {
+    flex: 1.2;
+    color: black;
+    font-size: 1.11rem;
+    line-height: 1.7;
+    background: #fff;
+    padding: 0 10px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.about-section-title {
+    color: rgb(153, 0, 51);
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 14px;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+/* Right column */
+.about-wedding-jaitri-right {
+    flex: 1;
+    color: rgb(208, 0, 71);
+    font-size: 1.13rem;
+    line-height: 1.7;
+    background: #fff;
+    padding: 0 10px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.feature-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    margin-top: 20px;
+    max-width: 400px;
+}
+
+.feature-list li {
+    font-size: 1rem;
+    color: rgb(11, 10, 10);
+    margin-bottom: 28px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    line-height: 1.2;
+}
+
+.star-point {
+    color: #ff6f61;
+    /* Gold */
+    font-size: 1.2em;
+    margin-right: 5px;
+    flex-shrink: 0;
+    line-height: 1;
+    vertical-align: middle;
+}
+
+@media (max-width: 1100px) {
+    .about-wedding-jaitri-row {
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+        padding: 0 10px;
+    }
+
+    .about-wedding-jaitri-photo {
+        min-width: 0;
+        max-width: 320px;
+        width: 80vw;
+        margin: 0 auto;
+    }
+
+    .about-wedding-jaitri-photo img {
+        width: 100%;
+        height: auto;
+        min-height: 160px;
+        max-height: 350px;
+        object-fit: cover;
+        display: block;
+    }
+
+    .about-wedding-jaitri-middle,
+    .about-wedding-jaitri-right {
+        font-size: 1rem;
+        padding: 0;
+        text-align: center;
+    }
+
+    .feature-list {
+        margin: 0 auto;
+    }
+}
+
+/* style.css - Add/update this in your existing CSS file */
+
+/* --- Marriage Photography Section (Adjusted) --- */
+.marriage-photography-section {
+    position: relative;
+    width: 100%;
+    min-height: 600px;
+    background-image: url('bgimage.jpeg');
+    /* REPLACE with your desired background image */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 80px 20px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+/* Optional: Add a subtle overlay for better text readability on busy backgrounds */
+.marriage-photography-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+}
+
+.marriage-photography-content {
+    position: relative;
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 40px;
+    border-radius: 10px;
+    max-width: 900px;
+    width: 95%;
+    box-sizing: border-box;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.marriage-photography-content h1 {
+    font-size: 3.5em;
+    font-weight: bold;
+    margin-bottom: 20px;
+    line-height: 1.2;
+    background: linear-gradient(to right, #FFD700, #e91e63, #00bcd4, #FFD700);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    animation: gradientMove 6s linear infinite;
+}
+
+/* Keyframes for the gradient text animation (should be in your CSS once) */
+@keyframes gradientMove {
+    0% {
+        background-position: 0% center;
+    }
+
+    100% {
+        background-position: 200% center;
+    }
+}
+
+.marriage-photography-content p {
+    font-size: 1.2em;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.marriage-photography-content h2 {
+    font-size: 1.8em;
+    margin-top: 25px;
+    margin-bottom: 15px;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.marriage-photography-content ul {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 30px;
+}
+
+.marriage-photography-content li {
+    font-size: 1.1em;
+    margin-bottom: 8px;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+#photographyForm {
+    text-align: left;
+    margin-top: 30px;
+}
+
+#photographyForm label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+}
+
+/* Updated selector for inputs, removed email/textarea */
+#photographyForm input[type='text'],
+#photographyForm input[type='date'],
+#photographyForm input[type='tel'] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 5px;
+    box-sizing: border-box;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+/* Ensure placeholder color also applies to new input types */
+#photographyForm input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Specific focus styles for inputs */
+#photographyForm input:focus {
+    outline: none;
+    border-color: rgb(153, 0, 51);
+    box-shadow: 0 0 8px rgb(153, 0, 51);
+}
+
+/* Small text for phone format hint */
+#photographyForm small {
+    display: block;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.85em;
+    margin-top: -15px;
+    /* Adjust to sit closer to input */
+    margin-bottom: 20px;
+    /* Space before next element */
+    text-align: left;
+}
+
+/* Removed specific textarea styles as it's no longer present */
+
+#photographyForm input[type='submit'] {
+    background-color: rgb(153, 0, 51);
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.2em;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+#photographyForm input[type='submit']:hover {
+    background-color: rgb(153, 0, 51);
+    transform: translateY(-2px);
+}
+
+/* --- Success Pop-up Styles --- */
+.success-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #4CAF50;
+    /* Green background */
+    color: white;
+    padding: 20px 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 1.5em;
+    opacity: 0;
+    /* Hidden by default */
+    visibility: hidden;
+    /* Hidden by default */
+    transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+}
+
+.success-popup.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.success-popup i {
+    font-size: 2em;
+}
+
+
+/* --- Responsive Adjustments (Add these to your @media (max-width: 768px) block) --- */
+@media (max-width: 768px) {
+    /* Your existing responsive rules... */
+
+    .marriage-photography-section {
+        padding: 50px 15px;
+        min-height: auto;
+    }
+
+    .marriage-photography-content {
+        padding: 30px 20px;
+    }
+
+    .marriage-photography-content h1 {
+        font-size: 2.5em;
+        margin-bottom: 15px;
+    }
+
+    .marriage-photography-content p {
+        font-size: 1em;
+        line-height: 1.5;
+        margin-bottom: 15px;
+    }
+
+    .marriage-photography-content ul {
+        margin-bottom: 20px;
+    }
+
+    .marriage-photography-content li {
+        font-size: 1em;
+        margin-bottom: 5px;
+    }
+
+    #photographyForm {
+        margin-top: 20px;
+    }
+
+    #photographyForm label {
+        font-size: 0.9em;
+    }
+
+    #photographyForm input,
+    #photographyForm textarea {
+        /* Kept textarea in selector for safety but it's not in HTML now */
+        padding: 8px;
+        margin-bottom: 15px;
+        font-size: 0.9em;
+    }
+
+    #photographyForm small {
+        font-size: 0.75em;
+    }
+
+    #photographyForm input[type='submit'] {
+        padding: 10px 20px;
+        font-size: 1em;
+    }
+
+    .success-popup {
+        padding: 15px 20px;
+        font-size: 1.2em;
+        gap: 10px;
+        width: 80%;
+        text-align: center;
+    }
+
+    .success-popup i {
+        font-size: 1.5em;
+    }
+}
+
+/* style.css - Add these new rules to your existing CSS file */
+
+/* --- Other Photography Services Section --- */
+.other-services-section {
+    padding: 80px 20px;
+    background-color: #fff;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.other-services-section .container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.section-main-heading {
+    font-size: 3em;
+    color: rgb(153, 0, 51);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.section-sub-heading {
+    font-size: 1.4em;
+    color: black;
+    margin-bottom: 50px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.5;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    /* 2 columns on larger screens, 1 on small */
+    gap: 30px;
+    margin-bottom: 50px;
+}
+
+.service-item {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.service-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.service-item img {
+    width: 100%;
+    height: 250px;
+    /* Fixed height for images */
+    object-fit: cover;
+    /* Cover the area, cropping if necessary */
+    display: block;
+}
+
+.service-content {
+    padding: 25px;
+    text-align: left;
+    flex-grow: 1;
+    /* Allows content to take available space */
+    display: flex;
+    flex-direction: column;
+}
+
+.service-content h3 {
+    font-size: 1.8em;
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.service-content p {
+    font-size: 1em;
+    color: #353535;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    flex-grow: 1;
+    /* Allows paragraph to take available space for consistent height */
+}
+
+.view-works-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: rgb(153, 0, 51);
+    color: white;
+    border-radius: 5px;
+    font-size: 0.95em;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    align-self: flex-start;
+    /* Align button to the left within its flex container */
+}
+
+.view-works-btn:hover {
+    background-color: #d81b60;
+}
+
+.see-all-services-container {
+    margin-top: 40px;
+    text-align: center;
+    /* Ensures the button is centered */
+}
+
+.see-all-services-btn {
+    display: inline-block;
+    padding: 15px 35px;
+    background-color: rgb(153, 0, 51);
+    color: #fff;
+    border-radius: 50px;
+    font-size: 1.2em;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.see-all-services-btn:hover {
+    background-color: #d81b60;
+    transform: translateY(-3px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .section-main-heading {
+        font-size: 2.2em;
+    }
+
+    .section-sub-heading {
+        font-size: 1.1em;
+        margin-bottom: 30px;
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr;
+        /* Single column on small screens */
+        gap: 25px;
+    }
+
+    .service-item img {
+        height: 180px;
+        /* Adjust image height for mobile */
+    }
+
+    .service-content {
+        padding: 20px;
+    }
+
+    .service-content h3 {
+        font-size: 1.5em;
+    }
+
+    .service-content p {
+        font-size: 0.9em;
+    }
+
+    .view-works-btn {
+        padding: 8px 15px;
+        font-size: 0.9em;
+    }
+
+    .see-all-services-btn {
+        padding: 12px 25px;
+        font-size: 1em;
+    }
+}
+
+/* style.css - Add these new rules to your existing CSS file */
+
+/* --- Stats Section --- */
+.stats-section {
+    padding: 80px 20px;
+    background-color: #f0f0f0;
+    /* Light background for contrast */
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    /* Ensure content is contained */
+}
+
+.stats-main-heading {
+    font-size: 3em;
+    color: #333;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.stats-sub-heading {
+    font-size: 1.4em;
+    color: #666;
+    margin-bottom: 50px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.5;
+}
+
+.stats-grid {
+    display: flex;
+    flex-wrap: wrap;
+    /* Allows items to wrap to the next line on smaller screens */
+    justify-content: center;
+    /* Center items horizontally */
+    gap: 30px;
+    /* Space between items */
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.stat-item {
+    background-color: white;
+    padding: 40px 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    flex: 1 1 220px;
+    /* Flex-grow, no shrink, base width 220px */
+    max-width: 280px;
+    /* Max width for consistency */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    min-height: 250px;
+    /* Ensure consistent box height */
+}
+
+.stat-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.stat-item i {
+    /* Icon styling */
+    font-size: 3.5em;
+    color: rgb(153, 0, 51);
+    margin-bottom: 15px;
+}
+
+.stat-counter {
+    font-size: 3.5em;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+    line-height: 1;
+    /* Adjust line-height to prevent extra space */
+}
+
+.stat-text {
+    font-size: 1.1em;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+/* Responsive adjustments for stats section */
+@media (max-width: 768px) {
+    .stats-main-heading {
+        font-size: 2.2em;
+    }
+
+    .stats-sub-heading {
+        font-size: 1.1em;
+        margin-bottom: 30px;
+    }
+
+    .stats-grid {
+        gap: 20px;
+    }
+
+    .stat-item {
+        flex: 1 1 calc(50% - 20px);
+        /* Two columns on smaller screens */
+        max-width: unset;
+        /* Remove max-width on smaller screens */
+        padding: 30px 15px;
+        min-height: 200px;
+        /* Adjust height for smaller screens */
+    }
+
+    .stat-item i {
+        font-size: 3em;
+        margin-bottom: 10px;
+    }
+
+    .stat-counter {
+        font-size: 2.8em;
+    }
+
+    .stat-text {
+        font-size: 1em;
+    }
+}
+
+@media (max-width: 480px) {
+    .stats-item {
+        flex: 1 1 100%;
+        /* Single column on very small screens */
+    }
+}
+
+/* --- Contact Us Section --- */
+.contact-section {
+    padding: 80px 20px;
+    /* Provides internal padding for content */
+    background-color: rgb(153, 0, 51);
+    /* New background color: a light, soft pink */
+    max-width: 1200px;
+    /* Limits the overall width of the section */
+    margin: 80px auto;
+    /* Centers the section horizontally and adds vertical space */
+    box-sizing: border-box;
+    overflow: hidden;
+    border: 1.02px solid #ffffff;
+    /* Adds a 1.02px white border */
+    border-radius: 10px;
+    /* Rounds the corners of the box */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    /* Adds a soft shadow for depth */
+}
+
+.contact-container {
+    display: flex;
+    flex-wrap: wrap;
+    /* Allows columns to stack on smaller screens */
+    justify-content: center;
+    gap: 40px;
+    /* Space between map and info */
+    max-width: 1200px;
+    /* Ensures content within the section is also constrained */
+    margin: 0 auto;
+    align-items: flex-start;
+    /* Align items to the top */
+}
+
+.contact-map {
+    flex: 1 1 55%;
+    /* Map takes more space on large screens */
+    min-width: 300px;
+    /* Minimum width before wrapping */
+    height: 465px;
+    /* Fixed height for the map iframe */
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    /* Ensures map corners are rounded */
+}
+
+.contact-map iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    /* Remove default iframe border */
+}
+
+.contact-info {
+    flex: 1 1 35%;
+    /* Info takes less space */
+    min-width: 300px;
+    /* Minimum width before wrapping */
+    background-color: rgb(255, 255, 255);
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* Vertically center content if space allows */
+}
+
+.contact-info h2 {
+    font-size: 2.8em;
+    color: rgb(153, 0, 51);
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.contact-description {
+    font-size: 1.1em;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.info-item {
+    display: flex;
+    align-items: flex-start;
+    /* Align icon and text to the top */
+    margin-bottom: 20px;
+}
+
+.info-item i {
+    font-size: 1.5em;
+    color: #e91e63;
+    margin-right: 15px;
+    width: 30px;
+    /* Fixed width for icon to align text */
+    text-align: center;
+    flex-shrink: 0;
+    /* Prevent icon from shrinking */
+}
+
+.info-item p {
+    font-size: 1.1em;
+    color: #333;
+    margin: 0;
+    /* Remove default paragraph margin */
+}
+
+.social-contact-icons {
+    margin-top: 30px;
+    display: flex;
+    gap: 20px;
+    justify-content: flex-start;
+    /* Align social icons to the left */
+}
+
+.social-contact-icons a {
+    font-size: 2em;
+    color: #555;
+    transition: color 0.3s ease;
+}
+
+.social-contact-icons a:hover {
+    color: #e91e63;
+}
+
+/* Responsive adjustments for Contact section */
+@media (max-width: 992px) {
+    .contact-section {
+        max-width: 95%;
+        /* Adjust max-width for tablets to keep some side margin */
+        margin: 50px auto;
+        /* Adjust vertical margin for tablets */
+        padding: 50px 20px;
+        /* Adjust padding for tablets */
+    }
+
+    .contact-map,
+    .contact-info {
+        flex: 1 1 100%;
+        /* Stack columns on tablets and smaller */
+        min-width: unset;
+        /* Remove min-width to allow full width */
+    }
+
+    .contact-map {
+        height: 410px;
+        /* Adjust map height for tablets */
+    }
+
+    .contact-info {
+        padding: 30px;
+    }
+
+    .contact-info h2 {
+        font-size: 2.5em;
+        text-align: center;
+    }
+
+    .contact-description {
+        text-align: center;
+        font-size: 1em;
+    }
+
+    .info-item {
+        justify-content: center;
+        /* Center info items on smaller screens */
+        text-align: center;
+    }
+
+    .info-item i {
+        margin-right: 10px;
+        font-size: 1.3em;
+    }
+
+    .info-item p {
+        font-size: 1em;
+    }
+
+    .social-contact-icons {
+        justify-content: center;
+        /* Center social icons on smaller screens */
+    }
+}
+
+@media (max-width: 576px) {
+    .contact-section {
+        max-width: 95%;
+        /* Keep similar max-width for mobile */
+        margin: 30px auto;
+        /* Adjust vertical margin for mobile */
+        padding: 30px 15px;
+        /* Adjust padding for mobile */
+        border-radius: 8px;
+        /* Slightly smaller border-radius for mobile */
+    }
+
+    .contact-map {
+        height: 310px;
+        /* Further reduce map height for mobile */
+    }
+
+    .contact-info {
+        padding: 25px;
+    }
+
+    .contact-info h2 {
+        font-size: 2em;
+    }
+
+    .contact-description {
+        font-size: 0.95em;
+    }
+
+    .info-item {
+        flex-direction: column;
+        /* Stack icon and text vertically on very small screens */
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    .info-item i {
+        margin-right: 0;
+        margin-bottom: 5px;
+    }
+
+    .info-item p {
+        font-size: 0.95em;
+        text-align: center;
+    }
+}
+
+/* style.css - Add these new rules and update existing ones */
+
+/* --- Common Section Headings (No changes needed) --- */
+.section-heading {
+    font-size: 2.8em;
+    color: rgb(153, 0, 51);
+    margin-bottom: 10px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.section-subheading {
+    font-size: 1.2em;
+    color: #666;
+    text-align: center;
+    margin-bottom: 50px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+}
+
+/* --- Testimonials Section (Updated testimonial-text font size) --- */
+.testimonials-section {
+    padding: 80px 20px;
+    background-color: #f8f8f8;
+    /* Light background */
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    /* 2-3 columns, responsive */
+    gap: 30px;
+    /* Gap between testimonial boxes */
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.testimonial-box {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* Pushes author to bottom */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.testimonial-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.testimonial-text {
+    font-size: 0.95em;
+    /* Made text smaller as requested */
+    color: #1b1a1a;
+    line-height: 1.7;
+    margin-bottom: 20px;
+    font-style: italic;
+}
+
+.testimonial-author {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: rgb(153, 0, 51);
+    /* Accent color for author name */
+    text-align: right;
+    margin-top: auto;
+    /* Pushes the author to the bottom if content is shorter */
+}
+
+/* --- NEW SECTION: Latest Trends --- */
+.latest-trends-section {
+    padding: 80px 20px;
+    background-color: #e1dede;
+    /* Another light background for contrast */
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.trends-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    /* Responsive grid for trend boxes */
+    gap: 30px;
+    /* Gap between trend boxes */
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.trend-box {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.trend-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.trend-box h3 {
+    font-size: 1.4em;
+    color: rgb(153, 0, 51);
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.trend-box p {
+    font-size: 0.95em;
+    color: #353232;
+    line-height: 1.7;
+    margin-bottom: 0;
+}
+
+
+/* --- FAQ Section (Adjusted margin for .faq-content-description and removed it from HTML) --- */
+.faq-section {
+    padding: 80px 20px;
+    background-color: #e3dede;
+    /* Slightly darker light background for contrast */
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+
+.faq-accordion {
+    max-width: 900px;
+    /* Limits the width of the accordion container */
+    margin: 0 auto;
+}
+
+.faq-item {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    /* Important for smooth max-height transition */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.3s ease;
+}
+
+.faq-item:last-child {
+    margin-bottom: 0;
+}
+
+.faq-item.active {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.faq-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 25px;
+    cursor: pointer;
+    background-color: #f0f0f0;
+    /* Background for the question bar */
+    transition: background-color 0.3s ease;
+}
+
+.faq-item.active .faq-question {
+    background-color: rgb(153, 0, 51);
+    /* Highlight color when active */
+}
+
+.faq-question h3 {
+    font-size: 1.2em;
+    color: #333;
+    margin: 0;
+    flex-grow: 1;
+    /* Allow question text to take available space */
+}
+
+.faq-item.active .faq-question h3 {
+    color: #fff;
+    /* White text when active */
+}
+
+.faq-question i {
+    font-size: 1.1em;
+    color: #e91e63;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+    /* Prevent icon from shrinking */
+    margin-left: 15px;
+    /* Space from text */
+}
+
+.faq-item.active .faq-question i {
+    transform: rotate(180deg);
+    /* Rotate arrow when open */
+    color: #fff;
+    /* White arrow when active */
+}
+
+.faq-answer {
+    max-height: 0;
+    /* Hidden by default */
+    overflow: hidden;
+    transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+    /* Smooth slide transition */
+    padding: 0 25px;
+    /* Initial padding */
+    background-color: #ffffff;
+    /* Background for the answer content */
+    color: #555;
+    line-height: 1.6;
+}
+
+.faq-item.active .faq-answer {
+    max-height: 500px;
+    /* Sufficiently large value for "drawer" effect */
+    padding: 20px 25px;
+    /* Final padding when open */
+}
+
+.faq-answer p {
+    margin-bottom: 0;
+    /* Remove default margin for paragraphs within answer */
+}
+
+
+/* Responsive Adjustments for Testimonials, Latest Trends, and FAQ Sections */
+@media (max-width: 992px) {
+    .section-heading {
+        font-size: 2.2em;
+    }
+
+    .section-subheading {
+        font-size: 1.1em;
+        margin-bottom: 30px;
+    }
+
+    .testimonials-grid,
+    .trends-grid {
+        /* Apply to both testimonial and trends grids */
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        /* Adjust columns for tablets */
+        gap: 25px;
+    }
+
+    .testimonial-box,
+    .trend-box {
+        /* Apply to both testimonial and trend boxes */
+        padding: 25px;
+    }
+
+    .testimonial-text,
+    .trend-box p {
+        /* Apply to testimonial text and trend box paragraphs */
+        font-size: 1em;
+    }
+
+    .faq-question {
+        padding: 18px 20px;
+    }
+
+    .faq-question h3 {
+        font-size: 1.1em;
+    }
+
+    .faq-answer {
+        padding: 0 20px;
+    }
+
+    .faq-item.active .faq-answer {
+        padding: 15px 20px;
+    }
+}
+
+@media (max-width: 576px) {
+
+    .testimonials-section,
+    .latest-trends-section,
+    /* Include new section for mobile padding */
+    .faq-section {
+        padding: 50px 15px;
+    }
+
+    .section-heading {
+        font-size: 1.8em;
+    }
+
+    .section-subheading {
+        font-size: 1em;
+        margin-bottom: 25px;
+    }
+
+    .testimonials-grid,
+    .trends-grid {
+        /* Both grids become single column */
+        grid-template-columns: 1fr;
+        /* Single column on mobile */
+        gap: 20px;
+    }
+
+    .testimonial-box,
+    .trend-box {
+        /* Both boxes adjust padding */
+        padding: 20px;
+    }
+
+    .testimonial-text,
+    .trend-box p {
+        /* Both texts adjust font size */
+        font-size: 0.95em;
+    }
+
+    .testimonial-author {
+        font-size: 1em;
+    }
+
+    .faq-question {
+        padding: 15px 18px;
+    }
+
+    .faq-question h3 {
+        font-size: 1em;
+    }
+
+    .faq-answer {
+        padding: 0 18px;
+    }
+
+    .faq-item.active .faq-answer {
+        padding: 12px 18px;
+    }
+}
+
+/* Import Google Font for signature text (place at the very top of your CSS file) */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap');
+
+/* --- Main Footer Styles --- */
+.main-footer {
+    background-color: rgb(151, 0, 51);
+    /* Footer background color */
+    color: #fff;
+    /* White text for contrast on dark background */
+    padding: 40px 20px;
+    font-size: 1.2rem;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    /* Ensures content is contained */
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    /* Aligns with your main content width */
+    margin: 0 auto;
+    /* Centers the footer content */
+    flex-wrap: wrap;
+    /* Allows items to wrap to the next line on smaller screens */
+    text-align: center;
+    /* Default center alignment for mobile stacking */
+}
+
+.footer-left,
+.footer-middle,
+.footer-right {
+    flex: 1;
+    /* Allows columns to take up equal space initially */
+    padding: 10px;
+    /* Internal padding for each section */
+    box-sizing: border-box;
+    /* --- Removed Border between sections --- */
+    border-right: none;
+}
+
+.footer-left {
+    text-align: left;
+    /* Align copyright text to the left */
+}
+
+.footer-middle {
+    text-align: center;
+    /* Center logo and love line */
+    display: flex;
+    /* Ensure flex properties for vertical stacking of logo/love line */
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer-right {
+    text-align: right;
+    /* Align social icons to the right */
+}
+
+.footer-left p {
+    margin: 0;
+    /* Remove default paragraph margin */
+}
+
+.footer-logo {
+    max-width: 120px;
+    /* Adjust logo size as needed */
+    height: auto;
+    margin-bottom: 10px;
+    /* Space below the logo */
+}
+
+.love-line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    /* Space below the love line */
+    gap: 10px;
+    /* Space between lines and heart */
+}
+
+.love-line .line {
+    /* Set fixed width for the lines as requested */
+    width: 100px;
+    /* Exactly 70px width for the lines */
+    height: 1px;
+    background-color: #fff;
+    /* White line color for both sides */
+    flex-grow: 0;
+    /* Prevent line from growing beyond 70px */
+    flex-shrink: 0;
+    /* Prevent line from shrinking */
+}
+
+.love-line i {
+    font-size: 1.2em;
+    /* Size of the heart icon */
+    color: #fff;
+    /* White heart color */
+}
+
+.social-footer-icons a {
+    color: #fff;
+    /* White social icons */
+    font-size: 1.5em;
+    /* Size of social icons */
+    margin-left: 15px;
+    /* Space between icons */
+    transition: color 0.3s ease;
+    /* Smooth hover effect */
+}
+
+.social-footer-icons a:hover {
+    color: #FF69B4;
+    /* Pink hover for main social icons (retained from previous) */
+}
+
+/* --- New Styles for Designer Info & Glowing Effects --- */
+
+.designer-info {
+    display: flex;
+    flex-direction: column;
+    /* Stacks text above social icons */
+    align-items: center;
+    /* Centers items horizontally */
+    /* Subtle separator line */
+}
+
+.signature-text {
+    font-family: 'Dancing Script', cursive;
+    /* Applied signature font */
+    font-size: 1.2em;
+    /* Slightly larger for prominence */
+    color: #fff;
+    /* Base text color */
+    margin-bottom: 15px;
+    /* Space between text and social icons */
+    /* Initial subtle glow (soft gold) */
+    text-shadow: 0 0 5px rgba(255, 215, 0, 0.6);
+    /* Soft gold color with some transparency */
+    transition: text-shadow 0.3s ease, color 0.3s ease;
+    /* Smooth transition for hover effect */
+}
+
+.signature-text:hover {
+    color: #FFD700;
+    text-shadow: 0 0 20px #FFD700,
+        0 0 30px #FFD700;
+}
+
+.designer-social-links {
+    display: flex;
+    gap: 20px;
+    /* Space between social icons */
+}
+
+.designer-social-links a {
+    color: #fff;
+    font-size: 1.2em;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.designer-social-links a:hover {
+    color: #FFD700;
+    /* Icons turn soft gold on hover */
+    text-shadow: 0 0 10px #FFD700,
+        /* Soft gold glow effect */
+        0 0 20px rgba(255, 215, 0, 0.7);
+    /* Additional glow layer */
+}
+
+/* --- Responsive Adjustments for Footer --- */
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+    }
+
+    .footer-left,
+    .footer-right,
+    .footer-middle {
+        flex: 1 1 100%;
+        /* Stack elements vertically on smaller screens */
+        text-align: center;
+        /* Center all content when stacked */
+        margin-bottom: 20px;
+        /* Space between stacked sections */
+        border-right: none;
+        /* Ensure no vertical borders when stacked */
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        /* Add horizontal border */
+    }
+
+    /* Remove bottom border from the last stacked section */
+    .footer-right {
+        border-bottom: none;
+    }
+
+    .footer-middle {
+        order: -1;
+        /* Place the logo/love line section at the top when stacked */
+        margin-bottom: 30px;
+        /* More space below logo when at top */
+    }
+
+    .social-footer-icons {
+        margin-top: 10px;
+        /* Add space if needed */
+    }
+
+    .social-footer-icons a {
+        margin: 0 10px;
+        /* Adjust margin for centered icons */
+    }
+
+    /* Ensure line length is still 70px on smaller screens for consistency */
+    .love-line .line {
+        width: 70px;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-footer {
+        padding: 30px 15px;
+        /* Reduce padding on very small screens */
+    }
+
+    .footer-logo {
+        max-width: 100px;
+        /* Smaller logo for tiny screens */
+    }
+
+    .love-line i {
+        font-size: 1em;
+        /* Smaller heart icon */
+    }
+
+    .social-footer-icons a {
+        font-size: 1.3em;
+        /* Smaller social icons */
+    }
+}
+
+/* Add this CSS snippet to your existing 'style.css' file */
+
+#welcome-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    /* Black background for fireworks */
+    z-index: 10000;
+    /* Ensure it's on top */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    opacity: 1;
+    /* Initially visible */
+    transition: opacity 1s ease-out;
+    /* Smooth fade-out */
+}
+
+#welcome-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+    /* Prevent clicks on hidden overlay */
+}
+
+#fireworks-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    /* Behind the welcome text */
+}
+
+.welcome-text {
+    position: relative;
+    z-index: 2;
+    color: rgb(255, 255, 255);
+    /* A vibrant deep sky blue, which contrasts nicely with black */
+    text-align: center;
+    text-shadow: 0 0 10px #FFD700,
+        /* Gold for the primary glow */
+        0 0 20px rgba(255, 215, 0, 0.7);
+    font-size: 2em;
+}
+
+.welcome-text h1 {
+    font-size: 3em;
+    margin-bottom: 10px;
+}
+
+.welcome-text p {
+    font-size: 2em;
+    opacity: 1;
+}
+
+/* Main Content (initially hidden) */
+#main-content {
+    opacity: 0;
+    /* Starts hidden */
+    transition: opacity 1s ease-in;
+    display: none;
+    /* Fades in smoothly */
+}
+
+#main-content.visible {
+    opacity: 1;
+    display: block;
+    /* Becomes visible */
+}
+
+/* Add this to your CSS to prevent scrolling */
+body.no-scroll {
+    overflow: hidden;
+}
+
+/* Add this CSS to your existing stylesheet */
+.whatsapp-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    /* Ensure it overlaps other content */
+    background-color: #25D366;
+    /* WhatsApp green */
+    color: white;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    /* For the ripple effect */
+}
+
+.whatsapp-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.whatsapp-button a {
+    color: white;
+    font-size: 30px;
+    text-decoration: none;
+    display: flex;
+    /* To center the icon */
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+/* Background effect (pulse animation) */
+.whatsapp-button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    animation: whatsapp-pulse 2s infinite;
+    z-index: -1;
+    /* Behind the icon */
+}
+
+.whatsapp-button:hover::before {
+    animation: none;
+    /* Stop pulse on hover */
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+}
+
+@keyframes whatsapp-pulse {
+    0% {
+        transform: translate(-50%, -50%) scale(0.8);
+        opacity: 0.7;
+    }
+
+    50% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 0.3;
+    }
+
+    100% {
+        transform: translate(-50%, -50%) scale(0.8);
+        opacity: 0.7;
+    }
+}

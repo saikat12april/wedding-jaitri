@@ -1,0 +1,1251 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Safari */
+    -khtml-user-select: none;
+    /* Konqueror HTML */
+    -moz-user-select: none;
+    /* Old Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+    overflow-x: hidden;
+    /* This padding-top needs to account for the header's height + the blue line's height. */
+    /* Header (90px logo + 10px top/bottom padding = ~110px) + Blue Line (10px) = 120px */
+    padding-top: 120px;
+    overflow-y: scroll;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+/* Header */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 10px 30px;
+    /* This gives your header 10px top/bottom padding */
+    background-color: rgb(153, 0, 51);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    /* --- FIXED HEADER PROPERTIES --- */
+    position: fixed;
+    /* Header is fixed at the top */
+    top: 0;
+    width: 100%;
+    z-index: 1001;
+    /* Header should be on top of general content */
+}
+
+.logo img {
+    height: 90px;
+    /* Your logo height is 90px */
+    width: 90px;
+}
+
+nav {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.social-icons {
+    display: flex;
+    gap: 16px;
+    margin-left: 20px;
+}
+
+.social-icons a {
+    color: #fff;
+    font-size: 20px;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.social-icons a:hover {
+    color: #e91e63;
+}
+
+/* Toggle Button - desktop default hidden */
+.menu-toggle {
+    display: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #fff;
+    order: 3;
+}
+
+/* Nav links - desktop default visible, mobile default hidden */
+.nav-links {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    flex: 1;
+    justify-content: center;
+    order: 2;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-links li {
+    position: relative;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    transition: color 0.3s ease, background 0.3s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.nav-links a:hover {
+    color: #e91e63;
+    background-color: #f3f3f3;
+    border-radius: 6px;
+}
+
+/* Blinking Dot */
+.blinking-dot {
+    position: absolute;
+    right: -.2px;
+    width: 8px;
+    height: 8px;
+    background-color: rgb(106, 255, 0);
+    border-radius: 50%;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+/* Nav Highlight (for hover effect) */
+.nav-links li a .nav-highlight {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background-color: rgb(246, 246, 34);
+    transition: width 0.3s ease-in-out;
+    z-index: 0;
+}
+
+.nav-links li a:hover .nav-highlight,
+.nav-links li a:focus .nav-highlight {
+    width: 100%;
+}
+
+/* --- Blue Static Line Below Header (always visible) --- */
+.blue-line-below-header {
+    width: 100%;
+    height: 10px;
+    /* Your desired height for the blue line */
+    background-color: #FFD700;
+    position: fixed;
+    /* Make it fixed */
+    /* Calculate its 'top' based on header's height */
+    /* Header height: Logo (90px) + top padding (10px) + bottom padding (10px) = 110px */
+    top: 110px;
+    /* This positions it exactly below the header */
+    left: 0;
+    z-index: 1000;
+    /* Ensure it's just below the header */
+    overflow: hidden;
+    /* Important: Clip the loading bar inside it */
+}
+
+/* --- Green Train Loading Bar (animates on click) --- */
+#header-loading-bar {
+    position: absolute;
+    /* Now absolute, relative to its parent .blue-line-below-header */
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* Position it at the top of its parent (.blue-line-below-header) */
+    height: 4px;
+    /* Its height will be within the 10px blue line */
+    background-color: transparent;
+    /* The actual background is handled by the :after pseudo-element */
+    overflow: hidden;
+    z-index: 1002;
+    /* Can be higher than blue line, but lower than header if needed */
+    opacity: 0;
+    /* Starts hidden */
+    transition: opacity 0.3s ease-out;
+    pointer-events: none;
+}
+
+#header-loading-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    /* Take full height of #header-loading-bar (which is 4px) */
+    background: linear-gradient(90deg, #0dff00 0%, rgba(221, 255, 1, 0.8) 100%);
+    box-shadow: 0 0 8px 1px rgba(221, 255, 1, 0.8);
+    transform: translateX(0);
+    width: 0;
+    animation: none;
+}
+
+#header-loading-bar.active {
+    opacity: 1;
+    /* Make visible when active */
+}
+
+#header-loading-bar.active::after {
+    animation: fillBar 3s ease-out forwards;
+}
+
+@keyframes fillBar {
+    0% {
+        width: 0%;
+    }
+
+    100% {
+        /* Changed to 100% to fill the whole width of the blue line */
+        width: 100%;
+    }
+}
+
+#header-loading-bar.done {
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
+}
+
+
+/* --- Responsive Design (Adjust as needed for your project) --- */
+@media (max-width: 992px) {
+    header {
+        padding: 10px 20px;
+        /* Assuming padding remains the same */
+    }
+
+    /* Since the header's height (90px logo + 20px padding) remains 110px,
+        the top position for the blue line and body padding-top should be consistent. */
+    .blue-line-below-header {
+        top: 110px;
+        /* Matches desktop, as header height doesn't change in this media query */
+    }
+
+    body {
+        padding-top: 120px;
+        /* Matches desktop, as header + blue line height is consistent */
+    }
+
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+        background-color: rgb(153, 0, 51);
+        position: absolute;
+        top: 100%;
+        /* Below the header */
+        left: 0;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        z-index: 999;
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        pointer-events: none;
+    }
+
+    .nav-links.active {
+        display: flex;
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+    }
+
+    .nav-links li {
+        margin: 10px 0;
+    }
+
+    .social-icons {
+        display: none;
+        width: 100%;
+        justify-content: center;
+        margin-top: 10px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .social-icons.active {
+        display: flex;
+        opacity: 1;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+}
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap');
+
+/* --- Main Footer Styles --- */
+.main-footer {
+    background-color: rgb(151, 0, 51);
+    color: #fff;
+    padding: 40px 20px;
+    font-size: 1.2rem;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    text-align: center;
+}
+
+.footer-left,
+.footer-middle,
+.footer-right {
+    flex: 1;
+    padding: 10px;
+    box-sizing: border-box;
+    border-right: none;
+}
+
+.footer-left {
+    text-align: left;
+}
+
+.footer-middle {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer-right {
+    text-align: right;
+}
+
+.footer-left p {
+    margin: 0;
+}
+
+.footer-logo {
+    max-width: 120px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.love-line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    gap: 10px;
+}
+
+.love-line .line {
+    width: 100px;
+    height: 1px;
+    background-color: #fff;
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+
+.love-line i {
+    font-size: 1.2em;
+    color: #fff;
+}
+
+.social-footer-icons a {
+    color: #fff;
+    font-size: 1.5em;
+    margin-left: 15px;
+    transition: color 0.3s ease;
+}
+
+.social-footer-icons a:hover {
+    color: #FF69B4;
+}
+
+/* --- New Styles for Designer Info & Glowing Effects --- */
+
+.designer-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.signature-text {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.2em;
+    color: #fff;
+    margin-bottom: 15px;
+    text-shadow: 0 0 5px rgba(255, 215, 0, 0.6);
+    transition: text-shadow 0.3s ease, color 0.3s ease;
+}
+
+.signature-text:hover {
+    color: #FFD700;
+    text-shadow: 0 0 20px #FFD700,
+                 0 0 30px #FFD700;
+}
+
+.designer-social-links {
+    display: flex;
+    gap: 20px;
+}
+
+.designer-social-links a {
+    color: #fff;
+    font-size: 1.2em;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.designer-social-links a:hover {
+    color: #FFD700;
+    text-shadow: 0 0 10px #FFD700,
+                 0 0 20px rgba(255, 215, 0, 0.7);
+}
+
+/* --- Responsive Adjustments for Footer --- */
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+    }
+
+    .footer-left,
+    .footer-right,
+    .footer-middle {
+        flex: 1 1 100%;
+        text-align: center;
+        margin-bottom: 20px;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-right {
+        border-bottom: none;
+    }
+
+    .footer-middle {
+        order: -1;
+        margin-bottom: 30px;
+    }
+
+    .social-footer-icons {
+        margin-top: 10px;
+    }
+
+    .social-footer-icons a {
+        margin: 0 10px;
+    }
+
+    .love-line .line {
+        width: 70px;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-footer {
+        padding: 30px 15px;
+    }
+
+    .footer-logo {
+        max-width: 100px;
+    }
+
+    .love-line i {
+        font-size: 1em;
+    }
+
+    .social-footer-icons a {
+        font-size: 1.3em;
+    }
+}
+/* --- Hero Section Styles (No Overlay) --- */
+.hero-section-no-overlay {
+    width: 100%;
+    height: 50vh; /* 50% of the viewport height */
+    overflow: hidden; /* Ensures image doesn't overflow its container */
+    display: flex; /* Helps in centering the image if it's smaller than the container */
+    justify-content: center;
+    align-items: center;
+    background-color: #333; /* Fallback background if image is slow to load */
+}
+
+.hero-image-no-overlay {
+    width: 100%;
+    height: 100%;/* Ensures the image covers the entire section without distortion */
+    object-position: center; /* Centers the image within the section */
+}
+
+/* Responsive adjustments for Hero Section (No Overlay) */
+@media (max-width: 768px) {
+    .hero-section-no-overlay {
+        height: 40vh; /* Adjust height for smaller tablets */
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-section-no-overlay {
+        height: 35vh; /* Further adjust height for mobile phones */
+    }
+}
+/* --- Contact Text Section Styles --- */
+.contact-text-section {
+    padding: 80px 20px; /* Ample padding top/bottom and some side padding */
+    text-align: center;
+    background-color: #fdfdfd; /* A light background for contrast */
+    color: #333; /* Default text color */
+    position: relative; /* Crucial: Needed for absolute positioning of bars */
+    overflow: hidden; /* Clips the bars as they move in and out of view */
+    min-height: 300px; /* Ensure enough height for content and bar animation */
+    display: flex; /* Use flexbox to center content vertically */
+    flex-direction: column; /* Stack content vertically */
+    justify-content: center; /* Center content vertically */
+    align-items: center; /* Center content horizontally */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* Subtle shadow for depth */
+}
+
+.contact-heading {
+    font-size: 3.5em; /* Significantly larger font size for the main heading */
+    margin-bottom: 25px;
+    font-weight: 700; /* Bold font for impact */
+    display: inline-block; /* Essential for applying the background gradient */
+    z-index: 2; /* Ensure heading is above the animated bars */
+    position: relative; /* For z-index to work correctly */
+
+    /* --- Smooth Left-to-Right Color Transition for Heading --- */
+    background: linear-gradient(to right,
+        rgb(153, 0, 51) 0%,       /* Start Red */
+        rgb(246, 246, 34) 50%,    /* Yellow in the middle */
+        rgb(153, 0, 51) 100%      /* Red again at the end, for seamless loop */
+    );
+    background-size: 300% auto; /* Make the background significantly wider to allow movement */
+    -webkit-background-clip: text; /* Clip the background to the text shape */
+    background-clip: text;
+    -webkit-text-fill-color: transparent; /* Make text color transparent to show gradient */
+    color: transparent; /* Fallback for browsers that don't support -webkit-text-fill-color */
+    white-space: nowrap; /* Prevents the heading from wrapping if possible (can break animation on wrap) */
+    animation: smoothColorShift 6s linear infinite; /* Animation duration and repetition */
+}
+
+@keyframes smoothColorShift {
+    0% {
+        background-position: left center; /* Start with the left edge of the background showing */
+    }
+    100% {
+        background-position: right center; /* Move the background entirely to the right */
+    }
+}
+
+.contact-subheading {
+    font-size: 1.4em; /* A good readable size for the subheading */
+    max-width: 800px; /* Limit width for better readability */
+    margin: 0 auto 0; /* Center the subheading */
+    line-height: 1.5;
+    color: #555; /* Slightly softer color than main text */
+    z-index: 2; /* Ensure subheading is above the animated bars */
+    position: relative; /* For z-index to work correctly */
+}
+
+/* --- Animated Bars Styles --- */
+.animated-bars-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%; /* Cover the entire section */
+    pointer-events: none; /* Allows clicks to pass through to content */
+    z-index: 1; /* Place bars behind text content */
+}
+
+.bar {
+    position: absolute;
+    bottom: 0; /* Bars start from the bottom */
+    width: 12px; /* Adjust bar width as needed */
+    /* Updated: Apply simple background color for blinking animation */
+    background-color: rgba(153, 0, 51, 0.6); /* Default to red with transparency */
+    animation: barAnimation 2.5s ease-in-out infinite alternate,
+               barBlink 1.2s linear infinite; /* Combine animations, new blink animation */
+    border-radius: 5px 5px 0 0; /* Rounded top corners */
+}
+
+/* Keyframes for the bar blinking animation */
+@keyframes barBlink {
+    0% {
+        background-color: rgba(153, 0, 51, 0.6); /* Red */
+    }
+    49% {
+        background-color: rgba(153, 0, 51, 0.6); /* Red */
+    }
+    50% {
+        background-color: rgba(246, 246, 34, 0.6); /* Yellow */
+    }
+    99% {
+        background-color: rgba(246, 246, 34, 0.6); /* Yellow */
+    }
+    100% {
+        background-color: rgba(153, 0, 51, 0.6); /* Red */
+    }
+}
+
+/* Individual bar positions, heights, and animation delays for a wave effect */
+.bar:nth-child(1) { left: 5%; height: 30px; animation-delay: 0s, 0s; }
+.bar:nth-child(2) { left: 15%; height: 45px; animation-delay: 0.2s, 0.1s; } /* Adjusted blink delay */
+.bar:nth-child(3) { left: 25%; height: 60px; animation-delay: 0.4s, 0.2s; } /* Adjusted blink delay */
+.bar:nth-child(4) { left: 35%; height: 35px; animation-delay: 0.6s, 0.3s; } /* Adjusted blink delay */
+.bar:nth-child(5) { left: 45%; height: 50px; animation-delay: 0.8s, 0.4s; } /* Adjusted blink delay */
+.bar:nth-child(6) { left: 55%; height: 65px; animation-delay: 1.0s, 0.5s; } /* Adjusted blink delay */
+.bar:nth-child(7) { left: 65%; height: 40px; animation-delay: 1.2s, 0.6s; } /* Adjusted blink delay */
+.bar:nth-child(8) { left: 75%; height: 55px; animation-delay: 1.4s, 0.7s; } /* Adjusted blink delay */
+.bar:nth-child(9) { left: 85%; height: 70px; animation-delay: 1.6s, 0.8s; } /* Adjusted blink delay */
+.bar:nth-child(10) { left: 95%; height: 45px; animation-delay: 1.8s, 0.9s; } /* Adjusted blink delay */
+
+
+/* Keyframes for the bar up and down animation */
+@keyframes barAnimation {
+    0% {
+        transform: translateY(0); /* Start at the bottom */
+        opacity: 0.6;
+    }
+    50% {
+        transform: translateY(-80px); /* Move up by 80px (adjust as needed) */
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(0); /* Return to the bottom */
+        opacity: 0.6;
+    }
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 992px) {
+    .contact-heading {
+        font-size: 2.8em;
+        white-space: normal; /* Allow wrapping on medium screens */
+    }
+    .contact-subheading {
+        font-size: 1.3em;
+    }
+}
+
+@media (max-width: 768px) {
+    .contact-text-section {
+        padding: 50px 15px;
+        min-height: 280px;
+    }
+    .contact-heading {
+        font-size: 2.2em;
+    }
+    .contact-subheading {
+        font-size: 1.1em;
+    }
+    .bar {
+        width: 10px; /* Slightly smaller bars on smaller screens */
+    }
+    @keyframes barAnimation {
+        50% {
+            transform: translateY(-60px); /* Adjust bar height for smaller screens */
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-text-section {
+        padding: 40px 10px;
+        min-height: 250px;
+    }
+    .contact-heading {
+        font-size: 1.8em;
+    }
+    .contact-subheading {
+        font-size: 1em;
+    }
+    .bar {
+        width: 8px; /* Even smaller bars on mobile */
+    }
+    @keyframes barAnimation {
+        50% {
+            transform: translateY(-40px); /* Further adjust bar height for mobile */
+        }
+    }
+}
+
+/* --- Booking Section --- */
+/* Your existing CSS (no changes needed for the new functionality) */
+.booking-section {
+    display: flex;
+    flex-wrap: wrap; /* Allows sections to wrap on smaller screens */
+    max-width: 1200px; /* Aligns with your main content width */
+    margin: 50px auto; /* Centers the section with vertical spacing */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    border-radius: 8px;
+    overflow: hidden; /* Ensures rounded corners are applied */
+}
+
+.booking-left {
+    flex: 2; /* Takes 2 parts of the 2:1 ratio */
+    padding: 40px;
+    background-color: #fff; /* White background for the form */
+    border-right: 1px solid #eee; /* Separator line */
+    position: relative; /* IMPORTANT: Essential for positioning the overlay correctly */
+}
+
+.booking-right {
+    flex: 1; /* Takes 1 part of the 2:1 ratio */
+    padding: 40px;
+    background-color: rgb(153, 0, 51); /* Your brand red */
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Vertically center content */
+}
+
+.booking-left h3,
+.booking-right h3 {
+    font-size: 2.5em;
+    margin-bottom: 25px;
+    color: rgb(153, 0, 51); /* Red for left heading */
+    text-align: center;
+}
+
+.booking-right h3 {
+    color: #FFD700; /* Yellow for right heading */
+}
+
+.booking-right p {
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.booking-right .contact-info p {
+    font-size: 1em;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.booking-right .contact-info i {
+    font-size: 1.2em;
+    margin-right: 10px;
+    color: #FFD700; /* Yellow icons */
+}
+
+.booking-right .contact-info a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.booking-right .contact-info a:hover {
+    color: #FFD700;
+}
+
+/* Form Styles */
+.booking-form .form-group {
+    margin-bottom: 20px;
+}
+
+.booking-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+}
+
+.booking-form input[type="text"],
+.booking-form input[type="email"],
+.booking-form input[type="tel"],
+.booking-form input[type="date"],
+.booking-form input[type="number"],
+.booking-form select,
+.booking-form textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+.booking-form textarea {
+    resize: vertical; /* Allow vertical resizing */
+}
+
+.submit-button {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background-color: rgb(246, 246, 34); /* Yellow button */
+    color: rgb(153, 0, 51); /* Dark red text */
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #FFD700; /* Slightly darker yellow */
+    transform: translateY(-2px);
+}
+
+/* Invoice Output Styles */
+.invoice-output {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px dashed #ccc;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.invoice-output h4 {
+    font-size: 1.8em;
+    color: rgb(153, 0, 51);
+    margin-bottom: 15px;
+}
+
+.invoice-output p {
+    font-size: 1.1em;
+    margin-bottom: 20px;
+    color: #555;
+}
+
+.download-button {
+    background-color: rgb(106, 255, 0); /* Green button */
+    color: rgb(153, 0, 51); /* Dark red text */
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.download-button:hover {
+    background-color: rgb(80, 200, 0); /* Darker green */
+    transform: translateY(-2px);
+}
+
+
+
+/* --- NEW: Custom Success Message Overlay Styles --- */
+.success-message-overlay {
+    position: absolute; /* Position relative to .booking-left */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.95); /* Semi-transparent white background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 8px; /* Match parent's border-radius */
+    z-index: 10; /* Ensure it's above the form */
+    padding: 20px;
+    box-sizing: border-box;
+    opacity: 0; /* Initially hidden */
+    visibility: hidden; /* Initially hidden */
+    transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+}
+
+.success-message-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.success-message-content {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    transform: translateY(20px); /* Initial state for animation */
+    opacity: 0; /* Initial state for animation */
+    animation: fadeInSlideUpMessage 0.6s ease-out forwards;
+}
+
+@keyframes fadeInSlideUpMessage {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.success-icon {
+    font-size: 4em;
+    color: rgb(106, 255, 0); /* Green checkmark */
+    margin-bottom: 20px;
+}
+
+.success-message-content h4 {
+    font-size: 1.8em;
+    color: rgb(153, 0, 51);
+    margin-bottom: 10px;
+}
+
+.success-message-content p {
+    font-size: 1.1em;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+/* Responsive adjustments for Booking Section */
+@media (max-width: 992px) {
+    .booking-left,
+    .booking-right {
+        flex: 1 1 100%; /* Stacks vertically on tablets */
+        border-right: none; /* Remove vertical border when stacked */
+    }
+
+    .booking-left {
+        border-bottom: 1px solid #eee; /* Add horizontal border */
+    }
+
+    .booking-right {
+        padding-top: 30px; /* Adjust padding when stacked */
+        padding-bottom: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .booking-left,
+    .booking-right {
+        padding: 30px 20px; /* Reduce padding on smaller screens */
+    }
+
+    .booking-left h3,
+    .booking-right h3 {
+        font-size: 2em;
+        margin-bottom: 20px;
+    }
+
+    .booking-right p {
+        font-size: 1em;
+    }
+}
+
+@media (max-width: 480px) {
+    .booking-left,
+    .booking-right {
+        padding: 20px 15px; /* Further reduce padding on mobile */
+    }
+
+    .booking-left h3,
+    .booking-right h3 {
+        font-size: 1.8em;
+        margin-bottom: 15px;
+    }
+
+    .booking-form label,
+    .booking-form input,
+    .booking-form select,
+    .booking-form textarea {
+        font-size: 0.95em;
+    }
+
+    .submit-button,
+    .download-button {
+        font-size: 1em;
+        padding: 12px;
+    }
+}
+/* --- Map Section --- */
+.map-section {
+    padding: 60px 20px; /* Ample vertical padding */
+    background-color: #f8f8f8; /* Light background for contrast */
+    text-align: center; /* Center align content */
+}
+
+.map-container {
+    max-width: 1200px; /* A good width for the map content */
+    margin: 0 auto 50px auto; /* Center the container */
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); /* More prominent shadow */
+    border: 3px solid rgb(153, 0, 51); /* Header color border */
+}
+
+.map-container h3 {
+    font-size: 2.8em;
+    margin-bottom: 15px;
+    color: rgb(153, 0, 51); /* Matching heading color */
+}
+
+.map-container h3 .gradient-text-gold {
+    /* Re-using your gradient text style from earlier if you have one */
+    background: linear-gradient(to right, #FFD700, #FFA500); /* Gold/Orange gradient */
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline; /* Keep it inline with the rest of the text */
+}
+
+.map-tagline {
+    font-size: 1.2em;
+    color: #666;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.map-embed {
+    width: 100%;
+    /* No specific styles needed here, iframe handles its own sizing within width */
+}
+
+.map-embed iframe {
+    border-radius: 5px; /* Slightly rounded corners for the map itself */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for the map */
+}
+
+/* Responsive adjustments for Map Section */
+@media (max-width: 768px) {
+    .map-section {
+        padding: 40px 15px;
+    }
+
+    .map-container {
+        padding: 25px;
+    }
+
+    .map-container h3 {
+        font-size: 2.2em;
+    }
+
+    .map-tagline {
+        font-size: 1em;
+    }
+}
+
+@media (max-width: 480px) {
+    .map-section {
+        padding: 30px 10px;
+    }
+
+    .map-container {
+        padding: 20px;
+    }
+
+    .map-container h3 {
+        font-size: 1.8em;
+    }
+}
+/* General Pop-up Styling (No change) */
+#discount-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Slightly transparent dark overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease-out, visibility 0.4s ease-out;
+    z-index: 1000; /* Ensures it's on top */
+}
+
+#discount-popup.popup-visible {
+    opacity: 1;
+    visibility: visible;
+    margin-top: 100px;
+}
+
+.popup-content {
+    background-color: #110104a6; /* Deep purple/blue for neon contrast */
+    padding: 50px 40px;
+    border-radius: 15px;
+    text-align: center;
+    position: relative; /* For positioning cracker animation and close button */
+    transform: scale(0.8); /* Start smaller for a subtle zoom-in animation */
+    transition: transform 0.4s ease-out;
+    min-width: 300px;
+    max-width: 90%;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.6), 0 0 30px rgba(255, 0, 255, 0.4); /* Reduced outer neon glow */
+}
+
+.popup-visible .popup-content {
+    transform: scale(1);
+}
+
+/* Neon Border for Pop-up (Reduced glow slightly) */
+.neon-border {
+    border: 3px solid rgb(255 255 255); /* Cyan neon primary border */
+    box-shadow:
+        0 0 4px rgb(153, 38, 51), /* Reduced inner cyan glow */
+        0 0 10px rgb(153, 38, 51), /* Reduced larger cyan glow */
+        inset 0 0 4px rgb(153, 38, 51), /* Reduced inner inset glow */
+        inset 0 0 10px rgb(153, 38, 51); /* Reduced larger inner inset glow */
+}
+
+/* Neon Text Styles - REDUCED HIGHLIGHT */
+.neon-text {
+    font-family: 'Arial Black', sans-serif; /* Stronger font for impact */
+    color: #fff; /* White base for a bright glow */
+    text-shadow:
+        0 0 4px #fff,    /* Subtle white glow */
+        0 0 7px #f0f,   /* Magenta glow */
+        0 0 15px #f0f;   /* Larger magenta glow (reduced from 20px, 30px, 40px) */
+    animation: neonPulse 1.5s infinite alternate; /* Subtle pulse effect */
+}
+
+.highlight {
+    font-size: 2.2em;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+}
+
+.highlight-large {
+    font-size: 1.6em;
+    margin-top: 5px;
+    letter-spacing: 1px;
+}
+
+/* Super Highlight - REDUCED HIGHLIGHT */
+.super-highlight {
+    font-size: 2.8em; /* Extra large for the percentage */ /* Bright yellow for percentage */
+    text-shadow:
+        0 0 4px #ff0,
+        0 0 10px #ff0,
+        0 0 20px #ff0; /* Reduced from 30px */
+    animation: superNeonPulse 1.2s infinite alternate;
+}
+
+/* Close Button (No change) */
+.close-button {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 2.5em; /* Larger 'X' */
+    cursor: pointer;
+    color: #fff; /* White base for 'X' glow */
+    text-shadow: 0 0 4px #ff0, 0 0 10px #ff0; /* Reduced yellow glow for 'X' */
+    transition: transform 0.2s ease-in-out;
+    z-index: 10;
+}
+
+.close-button:hover {
+    transform: rotate(90deg); /* Spin on hover */
+}
+
+/* Cracker Animation Container (No change) */
+#cracker-animation-area {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* Keep particles within bounds */
+    pointer-events: none; /* Allows clicks to pass through */
+    z-index: 0; /* Behind content */
+}
+
+/* Keyframe Animations */
+@keyframes neonPulse {
+    from { text-shadow: 0 0 4px #fff, 0 0 7px #f0f, 0 0 15px #f0f; }
+    to { text-shadow: 0 0 3px #fff, 0 0 6px #f0f, 0 0 14px #f0f; }
+}
+
+@keyframes superNeonPulse {
+    from { text-shadow: 0 0 4px #ff0, 0 0 10px #ff0, 0 0 20px #ff0; }
+    to { text-shadow: 0 0 3px #ff0, 0 0 8px #ff0, 0 0 18px #ff0; }
+}
+
+/* Sticker Base (Border glow reduced) */
+#discount-sticker {
+    position: fixed;
+    right: 20px;
+    top: 80%;
+    transform: translateY(-50%); /* Center vertically */
+    width: 100px;
+    padding: 25px 15px;
+    text-align: center;
+    cursor: grab; /* Indicates draggability */
+    z-index: 999; /* Below pop-up, above content */
+    background-color: rgba(10, 0, 30, 0.8); /* Dark, slightly transparent background */
+    animation: neonStickerPulse 3s infinite alternate; /* Continuous color/glow change */
+
+    /* --- Rough Edge Approximation (Glows Reduced) --- */
+    box-shadow:
+        5px 5px 0 0 #0ff,     /* Cyan shadow */
+        -5px -5px 0 0 #f0f,   /* Magenta shadow */
+        10px -2px 0 0 #ff0,   /* Yellow shadow */
+        -2px 10px 0 0 #0f0,   /* Green shadow */
+        -7px 3px 0 0 #0ff,
+        3px -7px 0 0 #f0f,
+        0 0 10px #0ff,         /* Outer glow (reduced from 15px) */
+        0 0 20px #f0f;         /* Larger outer glow (reduced from 30px) */
+}
+
+/* Sticker Text Highlight - REDUCED HIGHLIGHT */
+.sticker-highlight {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #fff; /* White base for text glow */
+    text-shadow:
+        0 0 3px #fff,
+        0 0 8px #ff0,
+        0 0 15px #f0f; /* Reduced from 20px */
+}
+
+/* Keyframe for sticker pulse (Glows Reduced) */
+@keyframes neonStickerPulse {
+    0% {
+        box-shadow:
+            5px 5px 0 0 #0ff, -5px -5px 0 0 #f0f, 10px -2px 0 0 #ff0, -2px 10px 0 0 #0f0, -7px 3px 0 0 #0ff, 3px -7px 0 0 #f0f,
+            0 0 10px #0ff, 0 0 20px #f0f;
+    }
+    50% {
+        box-shadow:
+            7px 3px 0 0 #f0f, -3px -7px 0 0 #0ff, 8px 0px 0 0 #0f0, -5px 8px 0 0 #ff0, -9px 5px 0 0 #f0f, 5px -9px 0 0 #0ff,
+            0 0 12px #f0f, 0 0 25px #0ff;
+    }
+    100% {
+        box-shadow:
+            5px 5px 0 0 #0ff, -5px -5px 0 0 #f0f, 10px -2px 0 0 #ff0, -2px 10px 0 0 #0f0, -7px 3px 0 0 #0ff, 3px -7px 0 0 #f0f,
+            0 0 10px #0ff, 0 0 20px #f0f;
+    }
+}

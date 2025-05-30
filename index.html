@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wedding Jaitri</title>
+    <link rel="icon" type="image/png" href="Logo New 1 2025 copy.png">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <div id="welcome-overlay">
+        <canvas id="fireworks-canvas"></canvas>
+        <div class="welcome-text">
+            <h1>Welcome!</h1>
+            <p>Your perfect shot awaits. Book your session now!</p>
+        </div>
+    </div>
+
+    <div id="main-content">
+    </div>
+    <header>
+        <div class="logo">
+            <img src="Logo New 2025 copy.png" alt="Logo" />
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li class="moments-item">
+                    <a href="moments.html">
+                        <span class="blinking-dot"></span>
+                        <i class="ri-image-line"></i> Moments
+                        <div class="nav-highlight"></div>
+                    </a>
+                </li>
+                <li><a href="wedding.html"><i class="ri-heart-line"></i> Wedding
+                        <div class="nav-highlight"></div>
+                    </a></li>
+                <li><a href="kidszone.html"><i class="ri-emotion-line"></i> KiddsZone
+                        <div class="nav-highlight"></div>
+                    </a></li>
+                <li><a href="services.html"><i class="ri-service-line"></i> Services
+                        <div class="nav-highlight"></div>
+                    </a></div>
+                </li>
+                <li><a href="aboutus.html"><i class="ri-information-line"></i> About Us
+                        <div class="nav-highlight"></div>
+                    </a></li>
+                <li><a href="reviews.html"><i class="ri-star-line"></i> Reviews
+                        <div class="nav-highlight"></div>
+                    </a></li>
+                <li><a href="bookus.html"><i class="ri-calendar-check-line"></i> Book Us
+                        <div class="nav-highlight"></div>
+                    </a></li>
+            </ul>
+            <div class="social-icons">
+                <a href="https://www.facebook.com/profile.php?id=100064007141466"><i class="ri-facebook-fill"></i></a>
+                <a href="https://www.instagram.com/wedding.jaitri?igsh=d3lmZnZpNTNzOTEw"><i
+                        class="ri-instagram-fill"></i></a>
+                <a href="https://youtube.com/@weddingjaitri?si=0OscWZt2T1jvV876"><i class="ri-youtube-fill"></i></a>
+            </div>
+        </nav>
+        <div class="menu-toggle" id="menuToggle">
+            <i class="ri-menu-line"></i>
+        </div>
+        <div id="header-loading-bar"></div>
+    </header>
+    <div class="blue-line-below-header"></div>
+    <section class="carousel">
+        <div class="carousel-container" id="carouselContainer">
+            <img src="hero1920/500/03 Front web.jpg" alt="Slide 1" class="slide active" />
+            <img src="hero1920/500/01  Front web.jpg" alt="Slide 2" class="slide" />
+            <img src="hero1920/500/02  Front web.jpg" alt="Slide 3" class="slide" />
+            <img src="hero1920/500/04  Front web.jpg" alt="Slide 4" class="slide" />
+            <button class="arrow left" id="prevBtn"><i class="ri-arrow-left-s-line"></i></button>
+            <button class="arrow right" id="nextBtn"><i class="ri-arrow-right-s-line"></i></button>
+            <div class="dots" id="dots">
+                <span class="dot active" data-index="0"></span>
+                <span class="dot" data-index="1"></span>
+                <span class="dot" data-index="2"></span>
+                <span class="dot" data-index="3"></span>
+            </div>
+        </div>
+    </section>
+
+    <div class="carousel-caption">
+        <div class="sindoor-effect-container"></div>
+
+        <h2>Wedding Jaitri</h2>
+        <p>Wedding photographer in Medinipur, operating all over India</p>
+    </div>
+
+    <section class="wedding-photos-section">
+        <div class="photo-gallery">
+            <div class="photo-item">
+                <a href="souravsima.html">
+                    <img src="wedding1.jpg" alt="Bride & Groom 1" />
+                    <div class="photo-caption">
+                        <h3>Sourav & Sima</h3>
+                        <p>Patra</p>
+                    </div>
+                </a>
+            </div>
+            <div class="photo-item">
+                <a href="arindampoulomi.html">
+                    <img src="wedding2.jpg" alt="Bride & Groom 2" />
+                    <div class="photo-caption">
+                        <h3>Arindam & Poulomi</h3>
+                        <p>Medinipur</p>
+                    </div>
+                </a>
+            </div>
+            <div class="photo-item">
+                <a href="pallabsarasi.html">
+                    <img src="wedding3.jpg" alt="Bride & Groom 3" />
+                    <div class="photo-caption">
+                        <h3>Pallab & Sarsi</h3>
+                        <p>Jhargram</p>
+                    </div>
+                </a>
+            </div>
+            <div class="photo-item">
+                <a href="purusottamsupriya.html">
+                    <img src="wedding4.jpg" alt="Bride & Groom 4" />
+                    <div class="photo-caption">
+                        <h3>Purusottam & Supriya</h3>
+                        <p>Medinipur</p>
+                    </div>
+                </a>
+            </div>
+            <div class="photo-item">
+                <a href="sujoyankita.html">
+                    <img src="wedding(5).jpg" alt="Bride & Groom 5" />
+                    <div class="photo-caption">
+                        <h3>Sujoy & Ankita</h3>
+                        <p>Salboni</p>
+                    </div>
+                </a>
+            </div>
+            <div class="photo-item">
+                <a href="sukritanushree.html">
+                    <img src="wedding6.jpg" alt="Bride & Groom 6" />
+                    <div class="photo-caption">
+                        <h3>Sukrit & Anushree</h3>
+                        <p>Ghatal</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="view-more-container">
+            <a href="wedding.html" class="view-more-btn">View More Weddings</a>
+        </div>
+    </section>
+
+    <!-- Fullscreen Wedding Film Section -->
+    <section class="fullscreen-video-section">
+        <div class="video-background">
+            <div class="video-border">
+                <video id="mainVideo" autoplay loop muted playsinline>
+                    <source src="WhatsApp Video 2025-05-27 at 21.39.33_b52e194f.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="video-overlay-content">
+            <h1>Wedding Film</h1>
+            <p>By Wedding Jaitri</p>
+            <button class="watch-now-fullscreen-btn" id="watchNowBtn1">
+                <i class="ri-youtube-fill"></i> Watch Now
+            </button>
+        </div>
+    </section>
+
+    <!-- Floating Text Section -->
+    <section class="floating-text-section" id="floatingTextSection">
+        <div class="floating-content">
+            <h2 style="color: black;">Want to make your wedding look</h2>
+            <h1 class="grand-text" id="colorChangingText">Something Big Grand, Creative and Unique?</h1>
+            <p class="offer-text" style="color: black;">Now you don't have to pay a lot</p>
+            <p style="color: black;"><strong>We offer the best Wedding & Pre-wedding Photography services within your
+                    budget!</strong></p>
+            <a href="bookus.html" class="book-us-btn">Book Us Now</a>
+        </div>
+    </section>
+
+    <!-- Wedding Films Section -->
+    <section class="wedding-films-section">
+        <div class="wedding-films-content">
+            <div class="wedding-films-text">
+                <h2>WEDDING FILMS</h2>
+                <p>Who else doesn't want that iconic cinematic vibe in their wedding video? Wedding films and videos are
+                    the most precious asset of everyone's life. With the cuts and callouts, we collage all those
+                    memorable moments that you didn’t want to miss in our every wedding film. More importantly, we take
+                    pleasure to document your wedding that is a perfect accompaniment to our style of photography. We
+                    are top <b>wedding photographers in kolkata</b>.</p>
+                <div class="view-all-films-container">
+                    <a href="https://www.youtube.com/@WeddingJaitri" class="view-all-films-btn">
+                        <i class="ri-movie-2-line"></i> View All Films
+                    </a>
+                </div>
+            </div>
+            <div class="wedding-films-video-container">
+                <div class="colorful-box">
+                    <video id="filmsVideo" autoplay loop muted playsinline>
+                        <source src="WhatsApp Video 2025-05-27 at 21.39.35_cc7808ae.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <!-- Button removed as per your request -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="premium-album-section">
+        <div class="premium-offer-content">
+            <h2 class="premium-offer-heading">The Best Wedding Photographers in Kolkata Offers</h2>
+            <p class="premium-offer-features">Premium, Hand Crafted &amp; Beautiful.</p>
+        </div>
+
+        <div class="album-scroll-section">
+            <div class="album-scroll-wrapper">
+                <div class="album-scroll-track">
+                    <!-- 10 unique album images, then repeat for seamless scroll -->
+                    <img src="Wed Album/1.jpg" alt="Album 1">
+                    <img src="Wed Album/10.jpg" alt="Album 2">
+                    <img src="Wed Album/12.jpg" alt="Album 3">
+                    <img src="Wed Album/13.jpg" alt="Album 4">
+                    <img src="Wed Album/14.jpg" alt="Album 5">
+                    <img src="Wed Album/15.jpg" alt="Album 6">
+                    <img src="Wed Album/2.jpg" alt="Album 7">
+                    <img src="Wed Album/3.jpg" alt="Album 8">
+                    <img src="Wed Album/4.jpg" alt="Album 9">
+                    <img src="Wed Album/5.jpg" alt="Album 10">
+                    <!-- Repeat for infinite effect -->
+                    <img src="Wed Album/1.jpg" alt="Album 1">
+                    <img src="Wed Album/10.jpg" alt="Album 2">
+                    <img src="Wed Album/12.jpg" alt="Album 3">
+                    <img src="Wed Album/13.jpg" alt="Album 4">
+                    <img src="Wed Album/14.jpg" alt="Album 5">
+                    <img src="Wed Album/15.jpg" alt="Album 6">
+                    <img src="Wed Album/2.jpg" alt="Album 7">
+                    <img src="Wed Album/3.jpg" alt="Album 8">
+                    <img src="Wed Album/4.jpg" alt="Album 9">
+                    <img src="Wed Album/5.jpg" alt="Album 10">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Place this BELOW your scrolling album section -->
+
+    <section class="about-intro-section">
+        <div class="about-intro-text">
+            Our team of the best Kolkata wedding photographers frames every moment of your special day with utmost care.
+            Then, weave the pictures magically to create value for a lifetime.
+        </div>
+    </section>
+
+    <section class="about-wedding-jaitri-section">
+        <div class="about-wedding-jaitri-row">
+            <!-- Left: Photo -->
+            <div class="about-wedding-jaitri-photo">
+                <img src="041 my pp copy.jpg" alt="Saikat De, Founder, Wedding Jaitri" />
+                <div class="about-photo-overlay">
+                    <div class="about-photo-name">Yagdip De</div>
+                    <div class="about-photo-title">Founder,WeddingJaitri</div>
+                </div>
+            </div>
+
+
+
+            <!-- Middle: About -->
+            <div class="about-wedding-jaitri-middle">
+                <h3 class="about-section-title">About Wedding Jaitri</h3>
+                <p>
+                    Choosing the right photographer for your wedding and related events is absolutely crucial. At
+                    Wedding Jaitri, we combine professionalism with a passion for capturing the genuine emotions of your
+                    once-in-a-lifetime moments. Our goal is for you to reminisce about your special day to its fullest.
+                    From pre-wedding photo shoots in Kolkata to post-wedding celebrations, we are dedicated to making
+                    you look classy and royal, always keeping your unique theme in mind. Just share your vision for your
+                    wedding photo story, then relax and enjoy the festivities with your family. Your valuable frames
+                    will be delivered on time—ensuring you’ve chosen the best wedding photographer in Kolkata.
+                </p>
+            </div>
+            <!-- Right: Why Wedding Jaitri -->
+            <div class="about-wedding-jaitri-right">
+                <h3 class="about-section-title">WHY WEDDING JAITRI?</h3>
+                <ul class="feature-list">
+                    <li>
+                        <i class="ri-star-fill star-point"></i>
+                        <strong>VALUE FOR MONEY</strong><br>
+                        We offer the most budget-friendly Kolkata Bengali wedding photography and videography services,
+                        always delivering the best quality and complete satisfaction.
+                    </li>
+                    <li>
+                        <i class="ri-star-fill star-point"></i>
+                        <strong>AWARD WINNER</strong><br>
+                        Your moments will be captured by recognized professionals, so you are always in safe and skilled
+                        hands.
+                    </li>
+                    <li>
+                        <i class="ri-star-fill star-point"></i>
+                        <strong>MOST EXPERIENCED</strong><br>
+                        With years of experience in the industry, our unmatched expertise ensures you get
+                        picture-perfect frames every time.
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <section class="marriage-photography-section">
+        <div class="marriage-photography-content">
+            <h1>Marriage Photography & Film</h1>
+            <p>Your wedding day is a once-in-a-lifetime event, and we are dedicated to capturing every precious moment
+                with artistry and emotion. From candid smiles to grand celebrations, our team ensures your memories are
+                preserved beautifully.</p>
+            <h2>Inquire About Your Dream Wedding Shoot:</h2>
+            <form id="photographyForm">
+                <label for="fullName">Your Full Name:</label>
+                <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required>
+
+                <label for="eventDate">Preferred Event Date:</label>
+                <input type="date" id="eventDate" name="eventDate" required>
+
+                <label for="phoneNumber">Phone Number:</label>
+                <input type="tel" id="phoneNumber" name="phoneNumber" pattern="[0-9]{10}" placeholder="e.g., 9876543210"
+                    required>
+                <small>Format: 10 digits (e.g., 9876543210)</small>
+
+                <input type="submit" id="submitButton" value="Send My Inquiry">
+            </form>
+
+            <div id="successPopup" class="success-popup">
+                <i class="fas fa-check-circle"></i> Inquiry Sent Successfully!
+            </div>
+        </div>
+    </section>
+    <section class="other-services-section">
+        <div class="container">
+            <h2 class="section-main-heading">OTHER PHOTOGRAPHY SERVICES</h2>
+            <p class="section-sub-heading">Looking for a caring, passionate, and creative wedding photographer in
+                Kolkata? It’s me!</p>
+
+            <div class="services-grid">
+                <div class="service-item">
+                    <img src="39 w.jpg" alt="Wedding Photography">
+                    <div class="service-content">
+                        <h3>Wedding Photography</h3>
+                        <p>Wedding photography is important for your special day. We ensure that not a single precious
+                            moment is missed.</p>
+                    </div>
+                </div>
+
+                <div class="service-item">
+                    <img src="19 w.jpg" alt="Pre Wedding Photography">
+                    <div class="service-content">
+                        <h3>Pre Wedding Photography</h3>
+                        <p>Pre-wedding shoots are trendy. So, before tieing knots, create the moments of love with your
+                            would-be in the best themes.</p>
+                    </div>
+                </div>
+
+                <div class="service-item">
+                    <img src="Candid wedding.jpg" alt="Candid Wedding Photography">
+                    <div class="service-content">
+                        <h3>Candid Wedding Photography</h3>
+                        <p>Get the frames of real happiness and flow of emotions with our most demanded candid wedding
+                            photography.</p>
+                    </div>
+                </div>
+
+                <div class="service-item">
+                    <img src="Maa.jpg" Maternity & Baby Photography">
+                    <div class="service-content">
+                        <h3>Maternity & Baby Photography</h3>
+                        <p>Start your new life by preserving the priceless moments of your golden period and baby with
+                            us.</p>
+                    </div>
+                </div>
+
+                <div class="service-item">
+                    <img src="Rice Ceremony Photography.jpg" alt="Rice Ceremony Photography">
+                    <div class="service-content">
+                        <h3>Rice Ceremony Photography</h3>
+                        <p>Celebrate the first milestone of your newborn’s life with us in the most unique and creative
+                            ways to get adorable images.</p>
+                    </div>
+                </div>
+
+                <div class="service-item">
+                    <img src="61.jpg" alt="Patna Wedding Photography">
+                    <div class="service-content">
+                        <h3>Birthday Celebrations Photography</h3>
+                        <p>Transforming your birthday into a captivating story, let’s capture and cherish every magical
+                            moment and heartfelt joy that unfolds.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="see-all-services-container">
+                <a href="services.html" class="see-all-services-btn">See All Services</a>
+            </div>
+        </div>
+    </section>
+    <section class="stats-section">
+        <div class="container">
+            <h2 class="stats-main-heading">OUR ACHIEVEMENTS</h2>
+            <p class="stats-sub-heading">Numbers that reflect our dedication and expertise in capturing your precious
+                moments.</p>
+
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <i class="fas fa-heart"></i>
+                    <div class="stat-counter" data-target="300">0</div>
+                    <p class="stat-text">WEDDINGS</p>
+                </div>
+
+                <div class="stat-item">
+                    <i class="fas fa-camera"></i>
+                    <div class="stat-counter" data-target="250">0</div>
+                    <p class="stat-text">PRE WEDDINGS</p>
+                </div>
+
+                <div class="stat-item">
+                    <i class="fas fa-baby"></i>
+                    <div class="stat-counter" data-target="100">0</div>
+                    <p class="stat-text">BABY PHOTOSHOOTS</p>
+                </div>
+
+                <div class="stat-item">
+                    <i class="fas fa-building"></i>
+                    <div class="stat-counter" data-target="10">0</div>
+                    <p class="stat-text">CORPORATE & INTERIOR</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="contact-section">
+        <div class="contact-container">
+            <div class="contact-map">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d118032.9637534048!2d87.17722177505492!3d22.409064641574385!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a1d5b7a6d7bbcbd%3A0x940e77229ccaa8e0!2sWedding%20Jaitri!5e0!3m2!1sen!2sin!4v1748001859276!5m2!1sen!2sin"
+                    width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+            <div class="contact-info">
+                <h2>Contact Us</h2>
+                <p class="contact-description">We're so passionate about making incredible photo & video stories for our
+                    couples, and this just shines through in our images. Contact us and let's together discuss & plan
+                    your iconic cinematic wedding.</p>
+
+                <div class="info-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <p>V162-Ballavpur,West Bengal-721101</p>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-envelope"></i>
+                    <p>wjaitri@gmail.com</p>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-phone"></i>
+                    <p>+91 7679724309 / 03222368763</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="testimonials-section">
+        <div class="container">
+            <h2 class="section-heading">Our Clients’ Testimonials</h2>
+            <p class="section-subheading">Please have a look at our clients' reviews of us.</p>
+
+            <div class="testimonials-grid">
+                <div class="testimonial-box">
+                    <p class="testimonial-text">"Got connected with Wedding Jaitri for my pre-wedding shoot. The
+                        photographer was fantastic and made it amazing. Will contact them again for my wedding
+                        photography. Great work!"</p>
+                    <p class="testimonial-author">Abhijeet Majumdar</p>
+                </div>
+                <div class="testimonial-box">
+                    <p class="testimonial-text">"Excellent photography skills. Nice behavior. I am delighted with my
+                        wedding photoshoot. Thanks, Wedding Jaitri!"</p>
+                    <p class="testimonial-author">Suman Das</p>
+                </div>
+                <div class="testimonial-box">
+                    <p class="testimonial-text">"We were blown away by the beautiful skills of Wedding Jaitri for our
+                        Kid’s Rice Ceremony. The photographs were excellent, and the album perfect. Excellent work. Very
+                        happy!"</p>
+                    <p class="testimonial-author">Sudipto Banerjee</p>
+                </div>
+                <div class="testimonial-box">
+                    <p class="testimonial-text">"Our Candid wedding shoot with Wedding Jaitri was so much fun. A great
+                        decision, indeed. The photographer was excellent, made me comfortable, and took great shots.
+                        Loved it!"</p>
+                    <p class="testimonial-author">Ruchi Mukherjee</p>
+                </div>
+                <div class="testimonial-box">
+                    <p class="testimonial-text">"My wedding photography became outstanding just because of Wedding
+                        Jaitri. From our first meet to album delivery, they captured beautiful shots at every step. Glad
+                        to connect. Will surely recommend!"</p>
+                    <p class="testimonial-author">Sandeep Ghosh</p>
+                </div>
+                <div class="testimonial-box">
+                    <p class="testimonial-text">"Beyond grateful to Wedding Jaitri Team for capturing our wedding day so
+                        beautifully! Professional, kind, attentive, they made us feel at ease, seamlessly blending in.
+                        Photos were stunning! Highly recommend Wedding Jaitri Team!"</p>
+                    <p class="testimonial-author">Suparno Karmakar</p>
+                </div>
+                <div class="testimonial-box">
+                    <p class="testimonial-text">"Couldn’t be happier with the stunning work by Wedding Jaitri Team!
+                        Exceeded every expectation. Captured every special moment beautifully. Their creativity and
+                        professionalism made us feel at ease. Final photos breathtaking—each one a work of art. Highly
+                        recommend!"</p>
+                    <p class="testimonial-author">Trizinta Roy</p>
+                </div>
+                <div class="testimonial-box">
+                    <p class="testimonial-text">"Choosing a wedding photographer is a significant decision, and we
+                        couldn't be happier with Wedding Jaitri. Seamless and enjoyable process from consultation to
+                        final delivery. They captured every moment with artistry. Highly recommend Wedding Jaitri for
+                        exceptional wedding photography."</p>
+                    <p class="testimonial-author">Ritwika Ghosh</p>
+                </div>
+                <div class="testimonial-box">
+                    <p class="testimonial-text">"Wedding Jaitri truly brought our vision to life. Their team captured
+                        the raw emotions and intricate details of our special day perfectly. We are so thrilled with the
+                        final album and the memories they preserved!"</p>
+                    <p class="testimonial-author">Arjun Singh</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="latest-trends-section">
+        <div class="container">
+            <h2 class="section-heading">Pre-Wedding and Wedding Photoshoots in Kolkata: Latest Trends</h2>
+            <p class="section-subheading">If it’s about Kolkata, then the pre-wedding photographers in Kolkata love to
+                capture the culture, art, and romance in their photo shoots. So, here are the latest trends taking over
+                in the City of Joy.</p>
+
+            <div class="trends-grid">
+                <div class="trend-box">
+                    <h3>Theme Shots of Durga Puja</h3>
+                    <p>Pre-wedding photographers in Kolkata use Dhunuchi dance poses, festive backgrounds, and bold
+                        colors to present the look and feel of Durga Puja, the most prominent festival in Kolkata. The
+                        going-to-bride wears a White-Red traditional-style Bengali saree with a bindi in the middle of
+                        the forehead and Shakha Pola in the hands with Alta. On the other hand, the going-to-be groom
+                        wears a traditional Dhoti Punjabi.</p>
+                </div>
+                <div class="trend-box">
+                    <h3>Vintage Shots</h3>
+                    <p>There are various locations in Kolkata where you can get a vintage feel. The places include
+                        Kolkata Raj Bari, Victoria Memorial, Howrah Bridge, Princep Ghat, Eco Park, Rabindra Sarovar,
+                        and so on.</p>
+                </div>
+                <div class="trend-box">
+                    <h3>Cinematic Storytelling and Candid</h3>
+                    <p>These days, capturing candid, stolen glances, playful moments, laughter, and Bollywood romance
+                        style is trending for pre-wedding photoshoots.</p>
+                </div>
+                <div class="trend-box">
+                    <h3>AI and AR Effects</h3>
+                    <p>With the latest innovations like artificial intelligence and augmented reality, photographers are
+                        using these effects to create floating flower beds and fantasy backgrounds for a perfect
+                        pre-wedding photoshoot in Kolkata.</p>
+                </div>
+                <div class="trend-box">
+                    <h3>Selfie and Mirror Photo-booths</h3>
+                    <p>Wedding photographers in Kolkata are aware of the latest trends and follow them. These days,
+                        unposed photos are trending to be captured by Polaroid cameras. Smartphone selfies and mirror
+                        selfies with short messages are trending.</p>
+                    .
+                </div>
+                <div class="trend-box">
+                    <h3>Vintage Bollywood Looks</h3>
+                    <p>Wedding photography in the present era includes grainy, retro Bollywood film-style edits and
+                        disposable camera shots.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq-section">
+        <div class="container">
+            <h2 class="section-heading">Frequently Asked Questions</h2>
+            <p class="section-subheading">Things to Remember While Hiring the Best Wedding Photographer in Kolkata</p>
+
+            <div class="faq-accordion">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>How do I book a session for the best wedding photography in Kolkata?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>The easiest way to book a session for the best wedding photography in Kolkata is by visiting
+                            Rig Biswas's website and filling out a form on the Join Us page.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>What is the cost of your photography packages?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Our photography packages are customized to fit your specific needs and preferences. Please
+                            contact us directly for a personalized quote and detailed package information based on your
+                            event's scope, duration, and desired deliverables.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Do you travel to different destinations for photoshoots?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, we absolutely love to travel for photoshoots! We offer destination wedding photography
+                            and pre-wedding shoots. Travel fees may apply depending on the location, but we're always
+                            excited to explore new places to capture your special moments.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>If we want to tailor our pre-wedding shoot theme, are you okay with it?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Definitely! We encourage couples to share their ideas for their pre-wedding shoot theme. We
+                            believe in creating unique and personalized experiences, and we'll work closely with you to
+                            bring your vision to life, offering creative suggestions and guidance along the way.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>What are the types of Photography services you offer?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We offer a comprehensive range of photography services including Wedding Photography
+                            (Traditional & Candid), Pre-Wedding Photography, Maternity & Baby Photoshoots, Rice Ceremony
+                            Photography, Corporate & Interior Photography, and more. We aim to capture all your life's
+                            significant events with artistic flair.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>What are the latest trends in Kolkata Bengali wedding photography?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Latest trends in Kolkata Bengali wedding photography include cinematic storytelling, candid
+                            moments, drone photography, personalized themes reflecting couple's hobbies, vintage
+                            Bollywood looks, and the incorporation of AI/AR effects for unique backgrounds. Photo-booths
+                            for unposed selfies are also very popular.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div id="whatsapp-popup-button" class="whatsapp-button">
+        <a href="#" target="_blank" aria-label="Chat on WhatsApp">
+            <i class="fab fa-whatsapp"></i> </a>
+    </div>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="script.js"></script>
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <p>&copy; 2025 Wedding Jaitri All rights reserved.</p>
+            </div>
+            <div class="footer-middle">
+                <img src="Logo New 2025 copy.png" alt="Wedding Jaitri Logo" class="footer-logo">
+                <div class="love-line">
+                    <span class="line"></span>
+                    <i class="fas fa-heart"></i> <span class="line"></span>
+                </div>
+            </div>
+            <div class="footer-right">
+                <div class="social-footer-icons">
+                    <a href="https://www.facebook.com/profile.php?id=100064007141466" target="_blank"
+                        aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/wedding.jaitri?igsh=d3lmZnZpNTNzOTEw" target="_blank"
+                        aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://youtube.com/@weddingjaitri?si=0OscWZt2T1jvV876" target="_blank"
+                        aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="designer-info">
+            <p class="signature-text">Web Designed by Saikat Kr De</p>
+            <div class="designer-social-links">
+                <a href="https://www.instagram.com/your_saikat_07" target="_blank" aria-label="Saikat Kr De Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.facebook.com/saikat.de.428700" target="_blank" aria-label="Saikat Kr De Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/saikatkrde/" target="_blank" aria-label="Saikat Kr De LinkedIn">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

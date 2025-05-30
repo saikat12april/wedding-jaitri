@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wedding Jaitri</title>
+    <link rel="icon" type="image/png" href="Logo New 1 2025 copy.png">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="bookingus.css" />
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <img src="Logo New 2025 copy.png" alt="Logo" />
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html"><i class="ri-home-4-line"></i> Home
+                        <div class="nav-highlight"></div>
+                    </a></li>
+                <li class="moments-item">
+                    <a href="moments.html">
+                        <span class="blinking-dot"></span>
+                        <i class="ri-image-line"></i> Moments
+                        <div class="nav-highlight"></div>
+                    </a>
+                </li>
+                <li><a href="wedding.html"><i class="ri-heart-line"></i> Wedding
+                        <div class="nav-highlight"></div>
+                    </a></li>
+                <li><a href="kidszone.html"><i class="ri-emotion-line"></i> KiddsZone
+                        <div class="nav-highlight"></div>
+                    </a></li>
+                <li><a href="services.html"><i class="ri-service-line"></i> Services
+                        <div class="nav-highlight"></div>
+                    </a>
+                </li>
+                <li><a href="aboutus.html"><i class="ri-information-line"></i> About Us
+                        <div class="nav-highlight"></div>
+                    </a></li>
+                <li><a href="reviews.html"><i class="ri-star-line"></i> Reviews
+                        <div class="nav-highlight"></div>
+                    </a></li>
+            </ul>
+            <div class="social-icons">
+                <a href="https://www.facebook.com/profile.php?id=100064007141466"><i class="ri-facebook-fill"></i></a>
+                <a href="https://www.instagram.com/wedding.jaitri?igsh=d3lmZnZpNTNzOTEw"><i
+                        class="ri-instagram-fill"></i></a>
+                <a href="https://youtube.com/@weddingjaitri?si=0OscWZt2T1jvV876"><i class="ri-youtube-fill"></i></a>
+            </div>
+        </nav>
+        <div class="menu-toggle" id="menuToggle">
+            <i class="ri-menu-line"></i>
+        </div>
+        <div id="header-loading-bar"></div>
+    </header>
+    <div class="blue-line-below-header"></div>
+    <div id="discount-popup" class="popup-hidden">
+        <div class="popup-content neon-border">
+            <button id="close-popup" class="close-button neon-text">&times;</button>
+            <div id="cracker-animation-area"></div>
+            <h2 class="neon-text highlight">Special Offer!</h2>
+            <p class="neon-text highlight-large">Get <span class="super-highlight">25% OFF</span> Now!</p>
+        </div>
+    </div>
+    <div id="discount-sticker" class="draggable neon-text">
+        <span class="sticker-highlight">25% OFF!</span>
+    </div>
+    <section class="hero-section-no-overlay">
+        <img src="hero1920/500/01  Front web.jpg" alt="Wedding Jaitri Hero Image" class="hero-image-no-overlay">
+    </section>
+    <section class="contact-text-section">
+        <h2 class="contact-heading">Get in Touch with WeddingJaitri</h2>
+        <p class="contact-subheading">Contact us and let's together discuss & plan your iconic cinematic wedding.</p>
+
+        <div class="animated-bars-container">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+    </section>
+    <section class="booking-section">
+        <div class="booking-left">
+            <h3>Book Your Event</h3>
+            <form id="bookingForm" class="booking-form">
+                <input type="hidden" name="access_key" value="2ec20653-bf61-480f-a754-161f003747f2">
+
+                <div class="form-group">
+                    <label for="clientName">What's your name?*</label>
+                    <input type="text" id="clientName" name="clientName" required>
+                </div>
+                <div class="form-group">
+                    <label for="clientEmail">Email*</label>
+                    <input type="email" id="clientEmail" name="clientEmail" required>
+                </div>
+                <div class="form-group phone-group">
+                    <label for="clientPhone">Phone Number</label>
+                    <div class="phone-input-wrapper">
+                        <span class="country-code">IN+91</span>
+                        <input type="tel" id="clientPhone" name="clientPhone" pattern="[0-9]{10}"
+                            placeholder="e.g., 9876543210" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="eventDate">Event Date</label>
+                    <input type="date" id="eventDate" name="eventDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="typeOfShoot">Type of Shoot</label>
+                    <select id="typeOfShoot" name="typeOfShoot" required>
+                        <option value="">Select Event Type</option>
+                        <option value="Engagement">Engagement</option>
+                        <option value="Anniversary">Anniversary</option>
+                        <option value="Birthday">Birthday</option>
+                        <option value="PACKAGE I: Normal (Groom Side)">PACKAGE I: Normal (Groom Side)</option>
+                        <option value="PACKAGE: Normal (Bride Side)">PACKAGE: Normal (Bride Side)</option>
+                        <option value="PACKAGE I: Standard (Groom Side)">PACKAGE I: Standard (Groom Side)</option>
+                        <option value="PACKAGE I: Standard (Bride Side)">PACKAGE I: Standard (Bride Side)</option>
+                        <option value="PACKAGE I: Standard (Both Side)">PACKAGE I: Standard (Both Side)</option>
+                        <option value="PACKAGE II: Best (Groom Side)">PACKAGE II: Best (Groom Side)</option>
+                        <option value="PACKAGE II: Best (Bride Side)">PACKAGE II: Best (Bride Side)</option>
+                        <option value="PACKAGE II: Gold (Both Side)">PACKAGE II: Gold (Both Side)</option>
+                        <option value="PACKAGE III: Better (Groom Side)">PACKAGE III: Better (Groom Side)</option>
+                        <option value="PACKAGE III: Better (Bride Side)">PACKAGE III: Better (Bride Side)</option>
+                        <option value="PACKAGE III: Platinum (Both Side)">PACKAGE III: Platinum (Both Side)</option>
+                        <option value="PACKAGE IV: Pro (Both Side)">PACKAGE IV: Pro (Both Side)</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="shootLocation">Shoot Location*</label>
+                    <input type="text" id="shootLocation" name="shootLocation" required>
+                </div>
+                <div class="form-group">
+                    <label for="estimatedBudget">Estimated Budget (₹):</label>
+                    <input type="number" id="estimatedBudget" name="estimatedBudget" min="0" required readonly>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="5"></textarea>
+                </div>
+                <button type="submit" class="submit-button">Submit & Get Invoice</button>
+            </form>
+
+            <div id="successMessageOverlay" class="success-message-overlay" style="display: none;">
+                <div class="success-message-content">
+                    <i class="ri-check-circle-fill success-icon"></i>
+                    <h4>Booking Submitted Successfully!</h4>
+                    <p>Your invoice will download shortly.</p>
+                    <p>Your Booking ID: <strong id="bookingIdDisplayCustom"></strong></p>
+                </div>
+            </div>
+
+            <div id="invoiceOutput" class="invoice-output" style="display: none;">
+                <h4>Booking Confirmation</h4>
+                <p>Your Booking ID: <strong id="bookingIdDisplay"></strong></p>
+                <button id="downloadInvoiceBtn" class="download-button">Download Invoice</button>
+            </div>
+        </div>
+        <div class="booking-right">
+            <h3>WHY BOOK US?</h3>
+            <p>One of the <strong>best wedding photographers in India.</strong> Choosing the right photographers for
+                your wedding is a pivotal decision, and at Wedding Jaitri, we offer a distinctive approach that sets us
+                apart. We believe a wedding is more than just an event; for us, it's a "Jaitri"—a grand procession of
+                love. We specialize in capturing the beautiful, genuine, and spontaneous candid moments that truly tell
+                your story, moving beyond posed shots to focus on authentic emotions. We're a cohesive team of talented
+                photographers, filmers, and cinematographers, ensuring you receive a comprehensive visual narrative. Our
+                global experience allows us to seamlessly blend into any culture or tradition, while our artistic eye
+                transforms fleeting moments into timeless masterpieces. We pride ourselves on being unobtrusive, yet
+                we're there to capture every significant, heartfelt moment, committed to delivering nothing less than
+                perfection for your cherished legacy.</p>
+            <div class="contact-info">
+                <p><i class="ri-map-pin-line"></i>V162-Ballavpur,West Bengal-721101</p>
+                <p><i class="ri-mail-line"></i> <a href="mailto:wjaitri@gmail.com">wjaitri@gmail.com</a></p>
+                <p><i class="ri-phone-line"></i> <a href="tel:+917679724309">+91 7679724309 / 03222368763</a></p>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <section class="map-section">
+        <div class="map-container">
+            <h3><span class="gradient-text-gold">Our Location</span> - Find Us Here!</h3>
+            <p class="map-tagline">Come visit us at our office or connect with us for your dream event.</p>
+            <div class="map-embed">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d118032.9637534048!2d87.17722177505492!3d22.409064641574385!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a1d5b7a6d7bbcbd%3A0x940e77229ccaa8e0!2sWedding%20Jaitri!5e0!3m2!1sen!2sin!4v1748001859276!5m2!1sen!2sin"
+                    width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </div>
+    </section>
+    <script src="bookingus.js"></script>
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <p>&copy; 2025 Wedding Jaitri All rights reserved.</p>
+            </div>
+            <div class="footer-middle">
+                <img src="Logo New 2025 copy.png" alt="Wedding Jaitri Logo" class="footer-logo">
+                <div class="love-line">
+                    <span class="line"></span>
+                    <i class="fas fa-heart"></i> <span class="line"></span>
+                </div>
+            </div>
+            <div class="footer-right">
+                <div class="social-footer-icons">
+                    <a href="https://www.facebook.com/profile.php?id=100064007141466" target="_blank"
+                        aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/wedding.jaitri?igsh=d3lmZnZpNTNzOTEw" target="_blank"
+                        aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://youtube.com/@weddingjaitri?si=0OscWZt2T1jvV876" target="_blank"
+                        aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="designer-info">
+            <p class="signature-text">Web Designed by Saikat Kr De</p>
+            <div class="designer-social-links">
+                <a href="https://www.instagram.com/your_saikat_07" target="_blank" aria-label="Saikat Kr De Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.facebook.com/saikat.de.428700" target="_blank" aria-label="Saikat Kr De Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/saikatkrde/" target="_blank" aria-label="Saikat Kr De LinkedIn">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

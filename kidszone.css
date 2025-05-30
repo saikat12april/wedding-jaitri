@@ -1,0 +1,685 @@
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Safari */
+    -khtml-user-select: none;
+    /* Konqueror HTML */
+    -moz-user-select: none;
+    /* Old Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+    padding-top: 120px; /* Space for fixed header and blue line */
+    width: 100%;
+    overflow-y: scroll; /* Allow vertical scroll */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Class to disable body scroll when modal is open */
+body.no-scroll {
+    overflow: hidden;
+}
+
+/* Header Styling */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+    padding: 10px 30px;
+    background-color: rgb(153, 0, 51); /* Deep red/maroon */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: fixed; /* Keep header at the top */
+    top: 0;
+    width: 100%;
+    z-index: 1001; /* Ensure header is above most content */
+}
+
+/* Logo Styling */
+.logo img {
+    height: 90px;
+    width: 90px;
+}
+
+/* Navigation Container */
+nav {
+    flex: 1; /* Allow nav to take available space */
+    display: flex;
+    justify-content: center; /* Center nav links */
+}
+
+/* Social Icons in Header */
+.social-icons {
+    display: flex;
+    gap: 16px;
+    margin-left: 20px;
+}
+
+.social-icons a {
+    color: #fff;
+    font-size: 20px;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.social-icons a:hover {
+    color: #e91e63; /* Pink on hover */
+}
+
+/* Menu Toggle Button (for mobile) */
+.menu-toggle {
+    display: none; /* Hidden by default on desktop */
+    font-size: 24px;
+    cursor: pointer;
+    color: #fff;
+    order: 3; /* Order for mobile layout */
+}
+
+/* Navigation Links */
+.nav-links {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    flex: 1;
+    justify-content: center;
+    order: 2; /* Order for desktop layout */
+    padding: 0;
+    margin: 0;
+}
+
+.nav-links li {
+    position: relative; /* For the highlight effect */
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    transition: color 0.3s ease, background 0.3s ease;
+    position: relative;
+    z-index: 1; /* Ensure text is above highlight */
+}
+
+.nav-links a:hover {
+    color: #e91e63; /* Pink on hover */
+    background-color: #f3f3f3; /* Light background on hover */
+    border-radius: 6px;
+}
+
+/* Blinking Dot for "Moments" */
+.blinking-dot {
+    position: absolute;
+    right: -.2px;
+    width: 8px;
+    height: 8px;
+    background-color: rgb(106, 255, 0); /* Green dot */
+    border-radius: 50%;
+    animation: blink 1s infinite; /* Blinking animation */
+}
+
+@keyframes blink {
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+}
+
+/* Nav Highlight (underline effect on hover) */
+.nav-links li a .nav-highlight {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0; /* Starts hidden */
+    height: 2px;
+    background-color: rgb(246, 246, 34); /* Yellow highlight */
+    transition: width 0.3s ease-in-out;
+    z-index: 0; /* Behind the text */
+}
+
+.nav-links li a:hover .nav-highlight,
+.nav-links li a:focus .nav-highlight {
+    width: 100%; /* Expands on hover/focus */
+}
+
+/* --- Blue Static Line Below Header (always visible) --- */
+.blue-line-below-header {
+    width: 100%;
+    height: 10px;
+    background-color: #FFD700; /* Gold color */
+    position: fixed;
+    top: 110px; /* Positioned below the header */
+    left: 0;
+    z-index: 1000; /* Below header, above content */
+    overflow: hidden;
+}
+
+/* --- Green Train Loading Bar (animates on click) --- */
+#header-loading-bar {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 4px;
+    background-color: transparent;
+    overflow: hidden;
+    z-index: 1002; /* Above header content */
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.3s ease-out;
+    pointer-events: none; /* Don't block clicks */
+}
+
+#header-loading-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: linear-gradient(90deg, #0dff00 0%, rgba(221, 255, 1, 0.8) 100%); /* Green gradient */
+    box-shadow: 0 0 8px 1px rgba(221, 255, 1, 0.8);
+    transform: translateX(0);
+    width: 0; /* Starts hidden */
+    animation: none; /* No animation initially */
+}
+
+#header-loading-bar.active {
+    opacity: 1; /* Show when active */
+}
+
+#header-loading-bar.active::after {
+    animation: fillBar 3s ease-out forwards; /* Fill animation */
+}
+
+@keyframes fillBar {
+    0% {
+        width: 0%;
+    }
+    100% {
+        width: 100%;
+    }
+}
+
+#header-loading-bar.done {
+    opacity: 0; /* Fade out when done */
+    transition: opacity 0.5s ease-out;
+}
+
+/* --- Responsive Design for Header and Nav --- */
+@media (max-width: 992px) {
+    header {
+        padding: 10px 20px;
+    }
+
+    .blue-line-below-header {
+        top: 110px; /* Adjust based on header height */
+    }
+
+    body {
+        padding-top: 120px; /* Adjust based on header height */
+    }
+
+    .nav-links {
+        display: none; /* Hidden by default on mobile */
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+        background-color: rgb(153, 0, 51);
+        position: absolute; /* Position below header */
+        top: 100%;
+        left: 0;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        z-index: 999; /* Below header, above main content */
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        pointer-events: none; /* Don't block clicks when hidden */
+    }
+
+    .nav-links.active {
+        display: flex; /* Show when active */
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto; /* Allow clicks when active */
+    }
+
+    .nav-links li {
+        margin: 10px 0;
+    }
+
+    .social-icons {
+        display: none; /* Hidden by default on mobile */
+        width: 100%;
+        justify-content: center;
+        margin-top: 10px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .social-icons.active {
+        display: flex; /* Show when active */
+        opacity: 1;
+    }
+
+    .menu-toggle {
+        display: block; /* Show menu toggle on mobile */
+    }
+}
+
+/* Main Footer Styling */
+.main-footer {
+    background-color: rgb(151, 0, 51); /* Similar to header */
+    color: #fff;
+    padding: 40px 20px;
+    font-size: 1.2rem;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    text-align: center;
+}
+
+.footer-left,
+.footer-middle,
+.footer-right {
+    flex: 1;
+    padding: 10px;
+    box-sizing: border-box;
+    border-right: none; /* No border on desktop */
+}
+
+.footer-left {
+    text-align: left;
+}
+
+.footer-middle {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer-right {
+    text-align: right;
+}
+
+.footer-left p {
+    margin: 0;
+}
+
+.footer-logo {
+    max-width: 120px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.love-line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    gap: 10px;
+}
+
+.love-line .line {
+    width: 100px;
+    height: 1px;
+    background-color: #fff;
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+
+.love-line i {
+    font-size: 1.2em;
+    color: #fff;
+}
+
+.social-footer-icons a {
+    color: #fff;
+    font-size: 1.5em;
+    margin-left: 15px;
+    transition: color 0.3s ease;
+}
+
+.social-footer-icons a:hover {
+    color: #FF69B4; /* Hot pink on hover */
+}
+
+/* --- New Styles for Designer Info & Glowing Effects --- */
+
+.designer-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.signature-text {
+    font-family: 'Dancing Script', cursive; /* Assuming this font is imported or available */
+    font-size: 1.2em;
+    color: #fff;
+    margin-bottom: 15px;
+    text-shadow: 0 0 5px rgba(255, 215, 0, 0.6); /* Initial subtle glow */
+    transition: text-shadow 0.3s ease, color 0.3s ease;
+}
+
+.signature-text:hover {
+    color: #FFD700; /* Gold on hover */
+    text-shadow: 0 0 20px #FFD700,
+        0 0 30px #FFD700; /* Stronger glow on hover */
+}
+
+.designer-social-links {
+    display: flex;
+    gap: 20px;
+}
+
+.designer-social-links a {
+    color: #fff;
+    font-size: 1.2em;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.designer-social-links a:hover {
+    color: #FFD700; /* Gold on hover */
+    text-shadow: 0 0 10px #FFD700,
+        0 0 20px rgba(255, 215, 0, 0.7); /* Stronger glow on hover */
+}
+
+/* --- Responsive Adjustments for Footer --- */
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column; /* Stack items vertically */
+    }
+
+    .footer-left,
+    .footer-right,
+    .footer-middle {
+        flex: 1 1 100%; /* Take full width */
+        text-align: center;
+        margin-bottom: 20px;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Separator line */
+    }
+
+    .footer-right {
+        border-bottom: none; /* No border for the last item */
+    }
+
+    .footer-middle {
+        order: -1; /* Move logo/love line to the top */
+        margin-bottom: 30px;
+    }
+
+    .social-footer-icons {
+        margin-top: 10px;
+    }
+
+    .social-footer-icons a {
+        margin: 0 10px; /* Adjust spacing */
+    }
+
+    .love-line .line {
+        width: 70px; /* Shorter lines */
+    }
+}
+
+@media (max-width: 480px) {
+    .main-footer {
+        padding: 30px 15px;
+    }
+
+    .footer-logo {
+        max-width: 100px;
+    }
+
+    .love-line i {
+        font-size: 1em;
+    }
+
+    .social-footer-icons a {
+        font-size: 1.3em;
+    }
+}
+
+/* Image Gallery Section */
+.image-gallery-section {
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+}
+
+/* Full-width hero image container */
+.full-width-image-container {
+    width: 100vw;
+    height: 500px; /* Fixed height for desktop */
+    overflow: hidden;
+    position: relative;
+}
+
+.full-width-image-container img {
+    width: 100%;
+    height: 100%; /* Cover the container */
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* Responsive adjustments for hero image */
+@media (max-width: 992px) {
+    .full-width-image-container {
+        height: 300px; /* Reduce height on tablets */
+    }
+}
+
+@media (max-width: 600px) {
+    .full-width-image-container {
+        height: 180px; /* Reduce height on mobile */
+    }
+}
+
+/* Wedding Gallery Section */
+.wedding-gallery-section {
+    width: 100vw;
+    padding: 3rem 0;
+    background: #fff8f8;
+}
+
+/* Section Header for Gallery */
+.section-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    opacity: 0; /* Hidden by default for animation */
+    transform: translateY(50px); /* Starts from bottom */
+    transition: all 0.8s cubic-bezier(.25,.46,.45,.94); /* Smooth animation */
+}
+
+.section-header.is-visible {
+    opacity: 1; /* Fade in */
+    transform: translateY(0); /* Move to original position */
+}
+
+.section-header h2 {
+    font-size: 2.1rem;
+    color: #990033;
+    margin-bottom: 1rem;
+}
+
+.section-header p {
+    font-size: 1.1rem;
+    color: #7f8c8d;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* Gallery Grid Layout */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns on desktop */
+    gap: 1.5rem;
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 0 2vw;
+}
+
+/* Individual Gallery Item */
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+    background: #f6f6f6;
+    opacity: 0; /* Hidden by default for animation */
+    transform: translateY(50px); /* Starts from bottom */
+    transition: all 0.8s cubic-bezier(.25,.46,.45,.94); /* Smooth animation */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 3 / 2; /* Landscape aspect ratio */
+    min-height: 320px;
+}
+
+.gallery-item.portrait {
+    aspect-ratio: 2 / 3; /* Portrait aspect ratio */
+    min-height: 320px;
+}
+
+.gallery-item.is-visible {
+    opacity: 1; /* Fade in */
+    transform: translateY(0); /* Move to original position */
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Cover the item */
+    display: block;
+    border-radius: 12px;
+    background: #eee;
+    object-position: center center;
+    cursor: pointer;
+}
+
+.gallery-item.portrait img {
+    object-fit: contain; /* Contain for portrait images */
+    background: #eee;
+}
+
+/* Responsive adjustments for Gallery Grid */
+@media (max-width: 1100px) {
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns on tablets */
+    }
+}
+
+@media (max-width: 700px) {
+    .gallery-grid {
+        grid-template-columns: 1fr; /* Single column on mobile */
+        gap: 1rem;
+    }
+    .gallery-item,
+    .gallery-item.portrait {
+        min-height: 180px; /* Smaller min-height */
+        aspect-ratio: unset; /* Remove fixed aspect ratio */
+        height: auto; /* Allow height to adjust */
+    }
+    .section-header h2 { font-size: 1.2rem; }
+}
+
+/* Fullscreen Modal Styles */
+.fullscreen-modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000; /* Initial z-index, will be updated by JS */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.9); /* Dark overlay */
+    overflow: hidden;
+    touch-action: none; /* Prevent scrolling/zooming on touch devices */
+}
+
+.modal-content {
+    margin: auto;
+    display: block;
+    width: auto;
+    height: 90vh; /* Max height 90% of viewport height */
+    max-width: 90vw; /* Max width 90% of viewport width */
+    object-fit: contain; /* Contain image within bounds */
+    animation: zoom 0.3s ease; /* Zoom in animation */
+    position: absolute; /* Center the image */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes zoom {
+    from {transform: translate(-50%, -50%) scale(0.9)}
+    to {transform: translate(-50%, -50%) scale(1)}
+}
+
+.close-modal {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 2; /* Above modal content */
+    transition: 0.3s;
+}
+
+.close-modal:hover {
+    color: #bbb;
+}
+
+.modal-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+    font-size: 35px;
+    cursor: pointer;
+    background: rgba(0,0,0,0.3); /* Semi-transparent background */
+    border: none;
+    padding: 15px 20px;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.prev-arrow { left: 20px; }
+.next-arrow { right: 20px; }
+
+.modal-arrow:hover { background: rgba(0,0,0,0.7); }
+
+/* Class to prevent body scroll when modal is open */
+body.modal-open { overflow: hidden; }
+

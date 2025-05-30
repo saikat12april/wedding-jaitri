@@ -1,0 +1,464 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Safari */
+    -khtml-user-select: none;
+    /* Konqueror HTML */
+    -moz-user-select: none;
+    /* Old Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+    overflow-x: hidden;
+    padding-top: 120px;
+    width: 100%;
+    overflow-y: scroll;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body.no-scroll {
+    overflow: hidden;
+}
+
+/* Header */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 10px 30px;
+    background-color: rgb(153, 0, 51);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1001;
+}
+
+.logo img {
+    height: 90px;
+    width: 90px;
+}
+
+nav {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.social-icons {
+    display: flex;
+    gap: 16px;
+    margin-left: 20px;
+}
+
+.social-icons a {
+    color: #fff;
+    font-size: 20px;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.social-icons a:hover {
+    color: #e91e63;
+}
+
+/* Toggle Button - desktop default hidden */
+.menu-toggle {
+    display: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #fff;
+    order: 3;
+}
+
+/* Nav links - desktop default visible, mobile default hidden */
+.nav-links {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    flex: 1;
+    justify-content: center;
+    order: 2;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-links li {
+    position: relative;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    transition: color 0.3s ease, background 0.3s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.nav-links a:hover {
+    color: #e91e63;
+    background-color: #f3f3f3;
+    border-radius: 6px;
+}
+
+/* Blinking Dot */
+.blinking-dot {
+    position: absolute;
+    right: -.2px;
+    width: 8px;
+    height: 8px;
+    background-color: rgb(106, 255, 0);
+    border-radius: 50%;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+/* Nav Highlight (for hover effect) */
+.nav-links li a .nav-highlight {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background-color: rgb(246, 246, 34);
+    transition: width 0.3s ease-in-out;
+    z-index: 0;
+}
+
+.nav-links li a:hover .nav-highlight,
+.nav-links li a:focus .nav-highlight {
+    width: 100%;
+}
+
+/* --- Blue Static Line Below Header (always visible) --- */
+.blue-line-below-header {
+    width: 100%;
+    height: 10px;
+    background-color: #FFD700;
+    position: fixed;
+    top: 110px;
+    left: 0;
+    z-index: 1000;
+    overflow: hidden;
+}
+
+/* --- Green Train Loading Bar (animates on click) --- */
+#header-loading-bar {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 4px;
+    background-color: transparent;
+    overflow: hidden;
+    z-index: 1002;
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+    pointer-events: none;
+}
+
+#header-loading-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: linear-gradient(90deg, #0dff00 0%, rgba(221, 255, 1, 0.8) 100%);
+    box-shadow: 0 0 8px 1px rgba(221, 255, 1, 0.8);
+    transform: translateX(0);
+    width: 0;
+    animation: none;
+}
+
+#header-loading-bar.active {
+    opacity: 1;
+}
+
+#header-loading-bar.active::after {
+    animation: fillBar 3s ease-out forwards;
+}
+
+@keyframes fillBar {
+    0% {
+        width: 0%;
+    }
+
+    100% {
+        width: 100%;
+    }
+}
+
+#header-loading-bar.done {
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
+}
+
+
+/* --- Responsive Design (Adjust as needed for your project) --- */
+@media (max-width: 992px) {
+    header {
+        padding: 10px 20px;
+    }
+
+    .blue-line-below-header {
+        top: 110px;
+    }
+
+    body {
+        padding-top: 120px;
+    }
+
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+        background-color: rgb(153, 0, 51);
+        position: absolute;
+        top: 100%;
+        left: 0;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        z-index: 999;
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        pointer-events: none;
+    }
+
+    .nav-links.active {
+        display: flex;
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+    }
+
+    .nav-links li {
+        margin: 10px 0;
+    }
+
+    .social-icons {
+        display: none;
+        width: 100%;
+        justify-content: center;
+        margin-top: 10px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .social-icons.active {
+        display: flex;
+        opacity: 1;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+}
+
+.main-footer {
+    background-color: rgb(151, 0, 51);
+    color: #fff;
+    padding: 40px 20px;
+    font-size: 1.2rem;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    text-align: center;
+}
+
+.footer-left,
+.footer-middle,
+.footer-right {
+    flex: 1;
+    padding: 10px;
+    box-sizing: border-box;
+    border-right: none;
+}
+
+.footer-left {
+    text-align: left;
+}
+
+.footer-middle {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer-right {
+    text-align: right;
+}
+
+.footer-left p {
+    margin: 0;
+}
+
+.footer-logo {
+    max-width: 120px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.love-line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    gap: 10px;
+}
+
+.love-line .line {
+    width: 100px;
+    height: 1px;
+    background-color: #fff;
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+
+.love-line i {
+    font-size: 1.2em;
+    color: #fff;
+}
+
+.social-footer-icons a {
+    color: #fff;
+    font-size: 1.5em;
+    margin-left: 15px;
+    transition: color 0.3s ease;
+}
+
+.social-footer-icons a:hover {
+    color: #FF69B4;
+}
+
+/* --- New Styles for Designer Info & Glowing Effects --- */
+
+.designer-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.signature-text {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.2em;
+    color: #fff;
+    margin-bottom: 15px;
+    text-shadow: 0 0 5px rgba(255, 215, 0, 0.6);
+    transition: text-shadow 0.3s ease, color 0.3s ease;
+}
+
+.signature-text:hover {
+    color: #FFD700;
+    text-shadow: 0 0 20px #FFD700,
+        0 0 30px #FFD700;
+}
+
+.designer-social-links {
+    display: flex;
+    gap: 20px;
+}
+
+.designer-social-links a {
+    color: #fff;
+    font-size: 1.2em;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.designer-social-links a:hover {
+    color: #FFD700;
+    text-shadow: 0 0 10px #FFD700,
+        0 0 20px rgba(255, 215, 0, 0.7);
+}
+
+/* --- Responsive Adjustments for Footer --- */
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+    }
+
+    .footer-left,
+    .footer-right,
+    .footer-middle {
+        flex: 1 1 100%;
+        text-align: center;
+        margin-bottom: 20px;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-right {
+        border-bottom: none;
+    }
+
+    .footer-middle {
+        order: -1;
+        margin-bottom: 30px;
+    }
+
+    .social-footer-icons {
+        margin-top: 10px;
+    }
+
+    .social-footer-icons a {
+        margin: 0 10px;
+    }
+
+    .love-line .line {
+        width: 70px;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-footer {
+        padding: 30px 15px;
+    }
+
+    .footer-logo {
+        max-width: 100px;
+    }
+
+    .love-line i {
+        font-size: 1em;
+    }
+
+    .social-footer-icons a {
+        font-size: 1.3em;
+    }
+}

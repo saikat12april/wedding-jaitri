@@ -1,0 +1,917 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Safari */
+    -khtml-user-select: none;
+    /* Konqueror HTML */
+    -moz-user-select: none;
+    /* Old Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+    overflow-x: hidden;
+    padding-top: 120px;
+    width: 100%;
+    overflow-y: scroll;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body.no-scroll {
+    overflow: hidden;
+}
+
+/* Header */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 10px 30px;
+    background-color: rgb(153, 0, 51);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1001;
+}
+
+.logo img {
+    height: 90px;
+    width: 90px;
+}
+
+nav {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.social-icons {
+    display: flex;
+    gap: 16px;
+    margin-left: 20px;
+}
+
+.social-icons a {
+    color: #fff;
+    font-size: 20px;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.social-icons a:hover {
+    color: #e91e63;
+}
+
+/* Toggle Button - desktop default hidden */
+.menu-toggle {
+    display: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #fff;
+    order: 3;
+}
+
+/* Nav links - desktop default visible, mobile default hidden */
+.nav-links {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    flex: 1;
+    justify-content: center;
+    order: 2;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-links li {
+    position: relative;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    transition: color 0.3s ease, background 0.3s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.nav-links a:hover {
+    color: #e91e63;
+    background-color: #f3f3f3;
+    border-radius: 6px;
+}
+
+/* Blinking Dot */
+.blinking-dot {
+    position: absolute;
+    right: -.2px;
+    width: 8px;
+    height: 8px;
+    background-color: rgb(106, 255, 0);
+    border-radius: 50%;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+/* Nav Highlight (for hover effect) */
+.nav-links li a .nav-highlight {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background-color: rgb(246, 246, 34);
+    transition: width 0.3s ease-in-out;
+    z-index: 0;
+}
+
+.nav-links li a:hover .nav-highlight,
+.nav-links li a:focus .nav-highlight {
+    width: 100%;
+}
+
+/* --- Blue Static Line Below Header (always visible) --- */
+.blue-line-below-header {
+    width: 100%;
+    height: 10px;
+    background-color: #FFD700;
+    position: fixed;
+    top: 110px;
+    left: 0;
+    z-index: 1000;
+    overflow: hidden;
+}
+
+/* --- Green Train Loading Bar (animates on click) --- */
+#header-loading-bar {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 4px;
+    background-color: transparent;
+    overflow: hidden;
+    z-index: 1002;
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+    pointer-events: none;
+}
+
+#header-loading-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: linear-gradient(90deg, #0dff00 0%, rgba(221, 255, 1, 0.8) 100%);
+    box-shadow: 0 0 8px 1px rgba(221, 255, 1, 0.8);
+    transform: translateX(0);
+    width: 0;
+    animation: none;
+}
+
+#header-loading-bar.active {
+    opacity: 1;
+}
+
+#header-loading-bar.active::after {
+    animation: fillBar 3s ease-out forwards;
+}
+
+@keyframes fillBar {
+    0% {
+        width: 0%;
+    }
+
+    100% {
+        width: 100%;
+    }
+}
+
+#header-loading-bar.done {
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
+}
+
+
+/* --- Responsive Design (Adjust as needed for your project) --- */
+@media (max-width: 992px) {
+    header {
+        padding: 10px 20px;
+    }
+
+    .blue-line-below-header {
+        top: 110px;
+    }
+
+    body {
+        padding-top: 120px;
+    }
+
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+        background-color: rgb(153, 0, 51);
+        position: absolute;
+        top: 100%;
+        left: 0;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        z-index: 999;
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        pointer-events: none;
+    }
+
+    .nav-links.active {
+        display: flex;
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+    }
+
+    .nav-links li {
+        margin: 10px 0;
+    }
+
+    .social-icons {
+        display: none;
+        width: 100%;
+        justify-content: center;
+        margin-top: 10px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .social-icons.active {
+        display: flex;
+        opacity: 1;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+}
+
+.main-footer {
+    background-color: rgb(151, 0, 51);
+    color: #fff;
+    padding: 40px 20px;
+    font-size: 1.2rem;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    text-align: center;
+}
+
+.footer-left,
+.footer-middle,
+.footer-right {
+    flex: 1;
+    padding: 10px;
+    box-sizing: border-box;
+    border-right: none;
+}
+
+.footer-left {
+    text-align: left;
+}
+
+.footer-middle {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer-right {
+    text-align: right;
+}
+
+.footer-left p {
+    margin: 0;
+}
+
+.footer-logo {
+    max-width: 120px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.love-line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    gap: 10px;
+}
+
+.love-line .line {
+    width: 100px;
+    height: 1px;
+    background-color: #fff;
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+
+.love-line i {
+    font-size: 1.2em;
+    color: #fff;
+}
+
+.social-footer-icons a {
+    color: #fff;
+    font-size: 1.5em;
+    margin-left: 15px;
+    transition: color 0.3s ease;
+}
+
+.social-footer-icons a:hover {
+    color: #FF69B4;
+}
+
+/* --- New Styles for Designer Info & Glowing Effects --- */
+
+.designer-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.signature-text {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.2em;
+    color: #fff;
+    margin-bottom: 15px;
+    text-shadow: 0 0 5px rgba(255, 215, 0, 0.6);
+    transition: text-shadow 0.3s ease, color 0.3s ease;
+}
+
+.signature-text:hover {
+    color: #FFD700;
+    text-shadow: 0 0 20px #FFD700,
+        0 0 30px #FFD700;
+}
+
+.designer-social-links {
+    display: flex;
+    gap: 20px;
+}
+
+.designer-social-links a {
+    color: #fff;
+    font-size: 1.2em;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.designer-social-links a:hover {
+    color: #FFD700;
+    text-shadow: 0 0 10px #FFD700,
+        0 0 20px rgba(255, 215, 0, 0.7);
+}
+
+/* --- Responsive Adjustments for Footer --- */
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+    }
+
+    .footer-left,
+    .footer-right,
+    .footer-middle {
+        flex: 1 1 100%;
+        text-align: center;
+        margin-bottom: 20px;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-right {
+        border-bottom: none;
+    }
+
+    .footer-middle {
+        order: -1;
+        margin-bottom: 30px;
+    }
+
+    .social-footer-icons {
+        margin-top: 10px;
+    }
+
+    .social-footer-icons a {
+        margin: 0 10px;
+    }
+
+    .love-line .line {
+        width: 70px;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-footer {
+        padding: 30px 15px;
+    }
+
+    .footer-logo {
+        max-width: 100px;
+    }
+
+    .love-line i {
+        font-size: 1em;
+    }
+
+    .social-footer-icons a {
+        font-size: 1.3em;
+    }
+}
+.hero-section-no-overlay {
+    width: 100%;
+    height: 50vh; /* 50% of the viewport height */
+    overflow: hidden; /* Ensures image doesn't overflow its container */
+    display: flex; /* Helps in centering the image if it's smaller than the container */
+    justify-content: center;
+    align-items: center;
+    background-color: #333; /* Fallback background if image is slow to load */
+}
+
+.hero-image-no-overlay {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the image covers the entire section without distortion */
+    object-position: center; /* Centers the image within the section */
+}
+
+/* Responsive adjustments for Hero Section (No Overlay) */
+@media (max-width: 768px) {
+    .hero-section-no-overlay {
+        height: 40vh; /* Adjust height for smaller tablets */
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-section-no-overlay {
+        height: 35vh; /* Further adjust height for mobile phones */
+    }
+}
+#about-us-section {
+    padding-bottom: 40px; /* Changed to 0 horizontal padding to allow lines to go edge-to-edge */
+    text-align: center;
+    background-color: #edf7ff; /* Your chosen light background color (AliceBlue) */
+    color: #333;
+    overflow: hidden; /* Important for containing animations */
+    position: relative; /* Needed if you use absolute positioning for any internal elements */
+}
+
+/* --- Vertical Lines Container Styling --- */
+.vertical-lines-container {
+    display: flex; /* Arranges lines in a row */
+    justify-content: space-between; /* Distributes lines evenly across the width */
+    align-items: flex-end; /* Lines grow from the bottom upwards */
+    width: 100%; /* Ensures the container for lines takes full width of its parent */ /* Max height for the lines */
+    margin-bottom: 5px; /* Space between lines and the heading */
+    overflow: hidden; /* Ensures lines don't visibly overflow above their container */
+    /* If you want the lines to always span 100% of the viewport width,
+        remove 'max-width', 'margin-left', and 'margin-right' properties below. */
+    /* max-width: 1200px; */
+    /* margin-left: auto; */
+    /* margin-right: auto; */
+}
+
+/* --- Individual Vertical Line Styling --- */
+.vertical-line {
+    width: 2px; /* Thickness of each vertical line */
+    /* background-color: #ff6f61; */ /* REMOVE this line */
+
+    /* ADD the gradient background */
+    background-image: linear-gradient(to right,
+        #ff393f, #ff663c, #f839cb, #9d35ff, #5533ff, #3582ff, #26baff);
+    background-size: 200% auto; /* Make the background wider for animation */
+
+    height: 0; /* Initial state: lines are invisible (0 height) */
+    opacity: 0; /* Also start with opacity 0 for a smoother reveal */
+    flex-shrink: 0; /* Prevents lines from shrinking on smaller screens */
+    /* If you uncomment flex-grow, also consider max-width to keep them thin */
+    /* flex-grow: 1; */
+    /* max-width: 2px; */
+}
+
+/* --- Keyframes for Continuous Line Animation --- */
+@keyframes line-grow-shrink {
+    0% {
+        height: 0;
+        opacity: 0;
+    }
+    20% { /* Grow up */
+        height: 50px; /* Final height for the lines */
+        opacity: 1;
+    }
+    80% { /* Stay at full height */
+        height: 50px;
+        opacity: 1;
+    }
+    100% { /* Shrink back down */
+        height: 0;
+        opacity: 0;
+    }
+}
+
+/* --- Apply Continuous Animation for Vertical Lines (triggered by JS) --- */
+/* The 'active' class is added by JavaScript when the section becomes visible */
+#about-us-section.active .vertical-line {
+    animation-name: line-grow-shrink, multicolor-shift; /* Apply both animations */
+    animation-duration: 3s, 6s; /* Duration for grow-shrink and multicolor-shift */
+    animation-timing-function: ease-in-out, linear; /* Timing for each animation */
+    animation-iteration-count: infinite, infinite; /* Makes both animations loop forever */
+    animation-fill-mode: both; /* Ensures initial state is applied before animation starts */
+    /* animation-direction: alternate; */ /* Uncomment if you want them to grow up, then down, then up again */
+}
+
+/* --- Staggered Animation Delays for Each Line --- */
+/* This ensures they don't all animate at the exact same time, creating a wave-like effect. */
+/* Extend this pattern for all 40 (or more) lines in your HTML. */
+#about-us-section.active .vertical-line:nth-child(1) { animation-delay: 0.05s, 0s; }
+#about-us-section.active .vertical-line:nth-child(2) { animation-delay: 0.10s, 0s; }
+#about-us-section.active .vertical-line:nth-child(3) { animation-delay: 0.15s, 0s; }
+#about-us-section.active .vertical-line:nth-child(4) { animation-delay: 0.20s, 0s; }
+#about-us-section.active .vertical-line:nth-child(5) { animation-delay: 0.25s, 0s; }
+#about-us-section.active .vertical-line:nth-child(6) { animation-delay: 0.30s, 0s; }
+#about-us-section.active .vertical-line:nth-child(7) { animation-delay: 0.35s, 0s; }
+#about-us-section.active .vertical-line:nth-child(8) { animation-delay: 0.40s, 0s; }
+#about-us-section.active .vertical-line:nth-child(9) { animation-delay: 0.45s, 0s; }
+#about-us-section.active .vertical-line:nth-child(10) { animation-delay: 0.50s, 0s; }
+#about-us-section.active .vertical-line:nth-child(11) { animation-delay: 0.55s, 0s; }
+#about-us-section.active .vertical-line:nth-child(12) { animation-delay: 0.60s, 0s; }
+#about-us-section.active .vertical-line:nth-child(13) { animation-delay: 0.65s, 0s; }
+#about-us-section.active .vertical-line:nth-child(14) { animation-delay: 0.70s, 0s; }
+#about-us-section.active .vertical-line:nth-child(15) { animation-delay: 0.75s, 0s; }
+#about-us-section.active .vertical-line:nth-child(16) { animation-delay: 0.80s, 0s; }
+#about-us-section.active .vertical-line:nth-child(17) { animation-delay: 0.85s, 0s; }
+#about-us-section.active .vertical-line:nth-child(18) { animation-delay: 0.90s, 0s; }
+#about-us-section.active .vertical-line:nth-child(19) { animation-delay: 0.95s, 0s; }
+#about-us-section.active .vertical-line:nth-child(20) { animation-delay: 1.00s, 0s; }
+#about-us-section.active .vertical-line:nth-child(21) { animation-delay: 1.05s, 0s; }
+#about-us-section.active .vertical-line:nth-child(22) { animation-delay: 1.10s, 0s; }
+#about-us-section.active .vertical-line:nth-child(23) { animation-delay: 1.15s, 0s; }
+#about-us-section.active .vertical-line:nth-child(24) { animation-delay: 1.20s, 0s; }
+#about-us-section.active .vertical-line:nth-child(25) { animation-delay: 1.25s, 0s; }
+#about-us-section.active .vertical-line:nth-child(26) { animation-delay: 1.30s, 0s; }
+#about-us-section.active .vertical-line:nth-child(27) { animation-delay: 1.35s, 0s; }
+#about-us-section.active .vertical-line:nth-child(28) { animation-delay: 1.40s, 0s; }
+#about-us-section.active .vertical-line:nth-child(29) { animation-delay: 1.45s, 0s; }
+#about-us-section.active .vertical-line:nth-child(30) { animation-delay: 1.50s, 0s; }
+#about-us-section.active .vertical-line:nth-child(31) { animation-delay: 1.55s, 0s; }
+#about-us-section.active .vertical-line:nth-child(32) { animation-delay: 1.60s, 0s; }
+#about-us-section.active .vertical-line:nth-child(33) { animation-delay: 1.65s, 0s; }
+#about-us-section.active .vertical-line:nth-child(34) { animation-delay: 1.70s, 0s; }
+#about-us-section.active .vertical-line:nth-child(35) { animation-delay: 1.75s, 0s; }
+#about-us-section.active .vertical-line:nth-child(36) { animation-delay: 1.80s, 0s; }
+#about-us-section.active .vertical-line:nth-child(37) { animation-delay: 1.85s, 0s; }
+#about-us-section.active .vertical-line:nth-child(38) { animation-delay: 1.90s, 0s; }
+#about-us-section.active .vertical-line:nth-child(39) { animation-delay: 1.95s, 0s; }
+#about-us-section.active .vertical-line:nth-child(40) { animation-delay: 2.00s, 0s; }
+
+
+/* --- Animated Text Styling (Multicolor) --- */
+.animated-text {
+    font-size: 3.5em; /* Adjust font size as needed */
+    font-weight: bold;
+    margin-bottom: 20px;
+    display: inline-block; /* Essential for background-clip: text to work correctly */
+
+    /* Apply a vibrant gradient as background */
+    background-image: linear-gradient(to right,
+        #ff393f, #ff663c, #f839cb, #9d35ff, #5533ff, #3582ff, #26baff);
+    background-size: 200% auto; /* Make the background wider than the text */
+
+    /* Clip the background to the text shape */
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    /* Make the text transparent so the background shines through */
+    -webkit-text-fill-color: transparent;
+    text-emphasis-color: transparent; /* Standard property */
+    /* Note: text-emphasis-color was a typo in a previous response, corrected to text-fill-color */
+
+    /* Animation to shift the background position, creating the multicolor effect */
+    animation: multicolor-shift 6s linear infinite alternate; /* Adjust duration and direction as needed */
+}
+
+@keyframes multicolor-shift {
+    0% { background-position: 0% center; }
+    100% { background-position: 100% center; }
+}
+
+/* Basic paragraph styling */
+#about-us-section p {
+    font-size: 1.1em;
+    max-width: 900px;
+    /* Center the paragraph within the available width */
+    margin: 0 auto;
+    line-height: 1.6;
+    /* Add horizontal padding to the paragraph so the text doesn't touch screen edges */
+    padding: 0 20px;
+}
+#about-section-three-column {
+    padding: 60px 0;
+    background-color: #f9f9f9;
+}
+
+#about-section-three-column .container {
+    display: flex;
+    align-items: stretch;
+    flex-wrap: wrap;
+    justify-content: center;
+    /* Increased max-width for the overall content area */
+    max-width: 1400px; /* Changed from 1200px to 1400px (or even 1600px for more) */
+    margin: 0 auto;
+    gap: 30px;
+    padding: 0 20px;
+}
+
+#about-section-three-column .left-column,
+#about-section-three-column .right-column,
+#about-section-three-column .middle-column {
+    flex: 1;
+    /* Increased min-width for individual columns */
+    min-width: 380px; /* Changed from 300px to 380px (you can try 400px or more) */
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+#about-section-three-column .middle-column {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+#about-section-three-column .profile-photo {
+    max-width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#about-section-three-column h2 {
+    font-size: 2.2em;
+    color: #333;
+    margin-bottom: 25px;
+    text-align: center;
+    border-bottom: 2px solid #ff6f61;
+    padding-bottom: 10px;
+}
+
+#about-section-three-column h3 {
+    font-size: 1.5em;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+#about-section-three-column p {
+    font-size: 1.2em;
+    line-height: 1.6;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.expertise-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.expertise-item:last-child {
+    margin-bottom: 0;
+}
+
+.star-icon {
+    font-size: 1.8em;
+    color: #ff6f61;
+    margin-right: 10px;
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+#about-section-three-column .right-column p {
+    margin-top: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) { /* Adjusted breakpoint if you increased max-width significantly */
+    #about-section-three-column .container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    #about-section-three-column .left-column,
+    #about-section-three-column .right-column,
+    #about-section-three-column .middle-column {
+        width: 100%;
+        min-width: unset; /* Remove min-width constraint when stacked */
+    }
+
+    #about-section-three-column .profile-photo {
+        max-height: 350px;
+        height: auto;
+    }
+}
+
+@media (max-width: 576px) {
+    #about-section-three-column h2 {
+        font-size: 1.8em;
+    }
+
+    #about-section-three-column h3 {
+        font-size: 1.3em;
+    }
+
+    #about-section-three-column p {
+        font-size: 1em;
+    }
+}
+
+/* Ensure the multicolor-shift keyframes are defined,
+   they should already be present from your previous CSS for .animated-text */
+@keyframes multicolor-shift {
+    0% { background-position: 0% center; }
+    100% { background-position: 100% center; }
+}
+
+#recent-works-section {
+    padding-bottom: 40px;
+    background-color: #edf7ff;
+    text-align: center;
+}
+
+#recent-works-section .section-title {
+    font-size: 2.8em;
+    font-weight: bold; /* Ensure font-weight is bold for better gradient visibility */
+    margin-bottom: 50px;
+    position: relative;
+    display: inline-block; /* Essential for background-clip: text */
+    padding-bottom: 15px;
+
+    /* Apply the multicolor gradient and animation */
+    background-image: linear-gradient(to right,
+        #ff393f, #ff663c, #f839cb, #9d35ff, #5533ff, #3582ff, #26baff);
+    background-size: 200% auto; /* Make background wider than text */
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-emphasis-color: transparent;
+    animation: multicolor-shift 6s linear infinite alternate; /* Apply the animation */
+}
+
+#recent-works-section .section-title::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 400px;
+    height: 3px;
+    background-color: #ff6f61; /* This line will remain a solid accent color */
+    border-radius: 2px;
+}
+
+.gallery-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px; /* Space between items */
+    margin-bottom: 30px;
+}
+
+.gallery-item {
+    /* Adjusted flex-basis and min-width for larger photos */
+    flex: 1 1 calc(33.333% - 40px); /* This calculation distributes space evenly */
+    max-width: calc(33.333% - 40px); /* Ensures max width for 3-column layout */
+    min-width: 400px; /* Increased minimum width of each photo box for wider appearance */
+
+    /* Adjusted height for taller landscape photos */ /* Set your desired fixed height */
+
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gallery-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures images fill the container without distortion */
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.1);
+}
+
+.gallery-item .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.gallery-item:hover .overlay {
+    opacity: 1;
+}
+
+.gallery-item .overlay p {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #fff;
+    margin: 0;
+    text-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+
+/* Responsive adjustments for gallery */
+@media (max-width: 1300px) { /* Adjusted breakpoint to account for wider items */
+    .gallery-item {
+        flex: 1 1 calc(50% - 30px); /* 2 items per row on slightly wider screens */
+        max-width: calc(50% - 30px);
+        min-width: 380px; /* Ensure a good minimum width for 2 columns */
+        height: 300px; /* Adjust height proportionally */
+    }
+}
+
+@media (max-width: 900px) { /* New breakpoint for potentially 1 or 2 items depending on width */
+    .gallery-item {
+        min-width: 320px; /* Slightly smaller min-width for narrower viewports */
+        height: 280px;
+    }
+}
+
+@media (max-width: 650px) { /* Ensure single column on smaller phones */
+    .gallery-item {
+        flex: 1 1 100%; /* 1 item per row */
+        max-width: 100%;
+        min-width: unset; /* No min-width when stacking */
+        height: 250px; /* Adjust height for single column on small screens */
+    }
+
+    #recent-works-section .section-title {
+        font-size: 2.2em;
+    }
+}
